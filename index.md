@@ -1,8 +1,11 @@
-## Welcome to GitHub Pages
+## KuhakT
 
-You can use the [editor on GitHub](https://github.com/tech-inducers/kuhakT/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+KuhakT is an initiative of TechInducers(https://www.techinducers.com) to build a robust cloud native highly scalable IoT platform. Its Open Source Apache 2.0 licensed.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+### Overview
+()
+
+### Main features of KuhakT 
 
 ### Markdown
 
