@@ -19,10 +19,12 @@ It has been designed to provide the view of managed devices(s),workflow engine f
 
 ### MQTT Core engine
 ![](image/IOT_image_master-MQTT-engine.jpg)
+
 Fig 2 kuhakT MQTT engine  managed device to boundary endpoint</c>
 
 ![](image/IOT_Strategic_updated-MQTT-reverse.jpg)
- Fig 3 kuhakT MQTT engine   boundary endpoint managed device to
+
+ Fig 3 kuhakT MQTT engine boundary endpoint managed device to
 ### workflow engine
 opensource workdflow engine to define and deploy end to end data follow
 Data flow can be either applied to domain or each device
@@ -33,8 +35,10 @@ UI to visualize doman,data registration,authetication ,end to end data visualiza
 
 ## Horizontal scaling of MQTT Agent
 ![](image/IOT_Strategic_updated-MQTT-Scalling.jpg)
+
 Fig 4 kuhakT MQTT engine scalling
 
 ## Deployment architecture
 ![](image/IOT_Strategic_updated-deployment.jpg)
+
 Fig 5 kuhakT deployment architecture
