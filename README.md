@@ -10,7 +10,7 @@ the platform is designed for device to device /device to service/service to devi
 * User interface to manage device, domain data management that include process definition for each device or across domain and end to end flow of each device,device profermance and fault managment that include alarm and performance key performance indicator monitoring
 
 
-![](image/IOT_platform_strategic_view.jpg)
+![](images/IOT_platform_strategic_view.jpg)
 
 Fig 1 kuhakT platform
 
@@ -18,11 +18,11 @@ Fig 1 kuhakT platform
 It has been designed to provide the view of managed devices(s),workflow engine for end to end data flow visualization, device to device boundary or device to service boundary or vice versa and device fault and performance in a single window.
 
 ### MQTT Core engine
-![](image/IOT_image_master-MQTT-engine.jpg)
+![](images/IOT_image_master-MQTT-engine.jpg)
 
 Fig 2 kuhakT MQTT engine  managed device to boundary endpoint</c>
 
-![](image/IOT_Strategic_updated-MQTT-reverse.jpg)
+![](images/IOT_Strategic_updated-MQTT-reverse.jpg)
 
  Fig 3 kuhakT MQTT engine boundary endpoint managed device to
 ### workflow engine
@@ -34,11 +34,11 @@ User specific view of the data visualizaion using corporate IDM/openid based aut
 UI to visualize doman,data registration,authetication ,end to end data visualization that include device fault and perfromance managment
 
 ## Horizontal scaling of MQTT Agent
-![](image/IOT_Strategic_updated-MQTT-Scalling.jpg)
+![](images/IOT_Strategic_updated-MQTT-Scalling.jpg)
 
 Fig 4 kuhakT MQTT engine scalling
 
 ## Deployment architecture
-![](image/IOT_Strategic_updated-deployment.jpg)
+![](images/IOT_Strategic_updated-deployment.jpg)
 
 Fig 5 kuhakT deployment architecture
