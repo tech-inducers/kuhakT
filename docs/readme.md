@@ -2,7 +2,8 @@
 
 ## Introduction
 kuhakT is a open-source IOT platform, it has been designed in the view of following layers and can be tailored using organization specific requirements
-the platform is designed for device to device /device to service/service to device or service/service communication.
+
+The platform is designed for device to device /device to service/service to device or service/service communication.
 * MQTT engine - a core component for light-weight message communication within platform framework
 * Workflow engine - user specific process definition and deployment for managed device or service specific workflow
 * Restful engine for device registration, authentication and domain registration
