@@ -24,17 +24,17 @@ Fig 2 kuhakT MQTT engine  managed device to boundary endpoint
 
 ![](images/IOT_Strategic_updated-MQTT-reverse.jpg)
 
- Fig 3 kuhakT MQTT engine boundary endpoint managed device to
+ Fig 3 kuhakT MQTT engine boundary endpoint to managed device
 
 MQTT protocol is used for platform communication and we support following protocol(s)
 
-####HTTPS
+#### HTTPS
 
-####HTTP
+#### HTTP
 
-####Coap
+#### Coap
 
-####MQTT
+#### MQTT
 
 protocol converter is used to convert above protocol to MQTT
 Aggregator,forwarder and retry function to be defined by the user - user can choose to define approproate function for end to end data flow - mqtt engine shall deploy the same.
