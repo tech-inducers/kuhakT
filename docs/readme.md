@@ -54,7 +54,6 @@ Fig 4 kuhakT MQTT engine scaling
 * Provisioner is a orchestration engine, is responsible for scaling mqtt agent, scaling applied based on no of device(s) connected for each doamin registration.
 
 ## Deployment architecture
-![](images/IOT_Strategic_updated-deployment.jpg)
 
 Fig 5 kuhakT deployment architecture
 
