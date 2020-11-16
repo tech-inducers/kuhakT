@@ -50,10 +50,12 @@ UI to visualize doman,data registration,authetication ,end to end data visualiza
 ![](images/IOT_Strategic_updated-MQTT-Scalling.jpg)
 
 Fig 4 kuhakT MQTT engine scalling
+
 Provisioner is a orchestration engine,is resposible for sacling mqtt agent, scaling applied based on no of device connected for each doamin registartion.
 
 ## Deployment architecture
 ![](images/IOT_Strategic_updated-deployment.jpg)
 
 Fig 5 kuhakT deployment architecture
+
 It is based on kubernetes platform and, can be deployed in public/private cloud.
