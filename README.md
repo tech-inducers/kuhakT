@@ -27,10 +27,15 @@ Fig 2 kuhakT MQTT engine  managed device to boundary endpoint
  Fig 3 kuhakT MQTT engine boundary endpoint managed device to
 
 MQTT protocol is used for platform communication and we support following protocol(s)
-HTTPS
-HTTP
-Coap
-MQTT
+
+####HTTPS
+
+####HTTP
+
+####Coap
+
+####MQTT
+
 protocol converter is used to convert above protocol to MQTT
 Aggregator,forwarder and retry function to be defined by the user - user can choose to define approproate function for end to end data flow - mqtt engine shall deploy the same.
 User can either choose to define workflow in domain -where all the device(s) are applied within domain or can be applied on each device.
