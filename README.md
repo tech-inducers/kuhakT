@@ -29,11 +29,8 @@ Fig 2 kuhakT MQTT engine  managed device to boundary endpoint
 MQTT protocol is used for platform communication and we support following protocol(s)
 
 #### HTTPS
-
 #### HTTP
-
 #### Coap
-
 #### MQTT
 
 protocol converter is used to convert above protocol to MQTT
