@@ -1,0 +1,31 @@
+logging:
+  level:
+    org.springframework: ERROR
+    com.techinducers: DEBUG
+spring:
+  profiles:
+    active: dev
+  main:
+    banner-mode: off
+  cloud:
+    stream:
+      bindings:
+        message-sink :
+         destination: amq.topic
+         binder: rabbit
+         group: messages-consumer-group
+         consumer :
+           concurrency: 1
+      rabbit:
+        bindings:
+          message-sink:
+            consumer:
+              durableSubscription: true
+              declareExchange: true
+              exchangeDurable: true
+              exchangeType: topic
+              queueNameGroupOnly: true
+  rabbitmq:
+    host: 192.168.0.120
+    password: client1
+    username: client1
