@@ -11,9 +11,9 @@ import java.util.List;
 
 public interface ProviderService {
 
-        public Provider createORupdateProvider(Provider providerReq);
-        public List<Provider> getAllProvider();
-        public Provider getProvider(Long providerId);
-        public void deleteProvider(Long providerId);
+        Provider createORupdateProvider(Provider providerReq);
+        List<Provider> getAllProvider();
+        Provider getProvider(Long providerId);
+        void deleteProvider(Long providerId);
 
 }

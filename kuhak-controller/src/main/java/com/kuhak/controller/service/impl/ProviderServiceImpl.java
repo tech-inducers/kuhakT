@@ -2,9 +2,11 @@ package com.kuhak.controller.service.impl;
 
 import com.kuhak.controller.dto.ProviderDto;
 import com.kuhak.controller.entity.Provider;
+import com.kuhak.controller.exception.ResourceNotFoundException;
 import com.kuhak.controller.repository.ProviderRepository;
 import com.kuhak.controller.service.ProviderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -31,12 +33,10 @@ public class ProviderServiceImpl implements ProviderService {
 
     @Override
     public Provider getProvider(Long providerId) {
-        Optional<Provider> provider = providerRepo.findById(providerId);
-        if(provider.isPresent()){
-            return provider.get();
-        }else{
-            return null;
-        }
+        return providerRepo.findById(providerId).orElseThrow(() -> new ResourceNotFoundException(
+                "Provider not found with id :" + providerId.toString()
+        ));
+
     }
 
     @Override

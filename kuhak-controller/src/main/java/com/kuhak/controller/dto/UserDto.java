@@ -1,5 +1,6 @@
 package com.kuhak.controller.dto;
 
+import com.kuhak.controller.entity.Provider;
 import com.kuhak.controller.entity.UserStatus;
 
 import java.time.LocalDateTime;
@@ -11,6 +12,7 @@ public class UserDto {
     String status;
     LocalDateTime validUpto;
     LocalDateTime activated_on;
+    Provider providerId;
 
     public Long getUserExtId() {
         return userExtId;
@@ -50,5 +52,13 @@ public class UserDto {
 
     public void setActivated_on(LocalDateTime activated_on) {
         this.activated_on = activated_on;
+    }
+
+    public Provider getProvider() {
+        return providerId;
+    }
+
+    public void setProvider(Provider providerId) {
+        this.providerId = providerId;
     }
 }
