@@ -8,7 +8,7 @@ public class ProviderDto {
 
 
     Long providerExtId;
-    Long providerName;
+    String providerName;
     String status;
     LocalDateTime validUpto;
     LocalDateTime activated_on;
@@ -23,11 +23,11 @@ public class ProviderDto {
         this.providerExtId = providerExtId;
     }
 
-    public Long getProviderName() {
+    public String getProviderName() {
         return providerName;
     }
 
-    public void setProviderName(Long providerName) {
+    public void setProviderName(String providerName) {
         this.providerName = providerName;
     }
 

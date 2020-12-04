@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface DeviceService {
 
-    Device createDevice(Device device);
+    Device createOrUpdateDevice(Device device);
     List<Device> getAllDevice();
     Device getDeviceById(Long id);
     void deleteDevice(Long id);

@@ -12,28 +12,30 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/provider")
-
 public class ProvicerController {
 
     @Autowired
     private ProviderService providerService;
 
+    @Autowired
+    private ProviderMapper providerMapper;
+
     //get all provider
     @GetMapping
     public List<ProviderDto> getAllProviderDtos(){
-        return providerService.getAllProvider().stream().map(p -> ProviderMapper.mapProviderToProviderDto(p)).collect(Collectors.toList());
+        return providerService.getAllProvider().stream().map(p -> providerMapper.mapProviderToProviderDto(p)).collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
     public ProviderDto getProviderById(@PathVariable (value = "id") Long providerId){
         Provider provider = providerService.getProvider(providerId);
-        return ProviderMapper.mapProviderToProviderDto(provider);
+        return providerMapper.mapProviderToProviderDto(provider);
     }
 
     // Create Provider
     @PostMapping
     public ProviderDto createProvider(@RequestBody ProviderDto providerDto){
-        Provider provider = providerService.createORupdateProvider(ProviderMapper.mapProviderDtoToProvider(providerDto));
-        return ProviderMapper.mapProviderToProviderDto(provider);
+        Provider provider = providerService.createORupdateProvider(providerMapper.mapProviderDtoToProvider(providerDto));
+        return providerMapper.mapProviderToProviderDto(provider);
     }
 }

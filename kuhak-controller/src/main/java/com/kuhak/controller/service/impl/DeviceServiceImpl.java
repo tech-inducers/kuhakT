@@ -1,6 +1,7 @@
 package com.kuhak.controller.service.impl;
 
 import com.kuhak.controller.entity.Device;
+import com.kuhak.controller.exception.ResourceNotFoundException;
 import com.kuhak.controller.repository.DeviceRepository;
 import com.kuhak.controller.service.DeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ public class DeviceServiceImpl implements DeviceService {
     @Autowired
     DeviceRepository deviceRepo;
     @Override
-    public Device createDevice(Device device) {
+    public Device createOrUpdateDevice(Device device) {
         return deviceRepo.save(device);
     }
 
@@ -27,9 +28,10 @@ public class DeviceServiceImpl implements DeviceService {
 
     @Override
     public Device getDeviceById(Long deviceId) {
-        Optional<Device> device = deviceRepo.findById(deviceId);
-        if(device.isPresent() == false) throw new EntityNotFoundException("Device for id:" +deviceId.toString()+" not found");
-        return device.get();
+        return deviceRepo.findById(deviceId).orElseThrow(() -> new ResourceNotFoundException(
+                "Device not found with id:" +deviceId.toString()
+        ));
+
     }
 
     @Override

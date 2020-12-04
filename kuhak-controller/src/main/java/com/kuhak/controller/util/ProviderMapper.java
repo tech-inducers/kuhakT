@@ -3,10 +3,12 @@ package com.kuhak.controller.util;
 import com.kuhak.controller.dto.ProviderDto;
 import com.kuhak.controller.entity.Provider;
 import com.kuhak.controller.entity.ProviderStatus;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ProviderMapper {
 
-    public static ProviderDto mapProviderToProviderDto(Provider provider){
+    public ProviderDto mapProviderToProviderDto(Provider provider){
         ProviderDto providerDto = new ProviderDto();
         providerDto.setProviderExtId(provider.getProviderExtId());
         providerDto.setStatus(provider.getStatus().toString());
@@ -17,7 +19,7 @@ public class ProviderMapper {
         return providerDto;
     }
 
-    public static Provider mapProviderDtoToProvider(ProviderDto providerDto){
+    public Provider mapProviderDtoToProvider(ProviderDto providerDto){
         Provider provider = new Provider();
         provider.setProviderExtId(providerDto.getProviderExtId());
         provider.setProviderName(providerDto.getProviderName());

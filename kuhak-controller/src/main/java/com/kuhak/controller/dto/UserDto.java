@@ -8,11 +8,12 @@ import java.time.LocalDateTime;
 public class UserDto {
 
     Long userExtId;
-    Long userName;
+    String userName;
     String status;
     LocalDateTime validUpto;
     LocalDateTime activated_on;
-    Provider providerId;
+    Long providerId;
+
 
     public Long getUserExtId() {
         return userExtId;
@@ -22,11 +23,11 @@ public class UserDto {
         this.userExtId = userExtId;
     }
 
-    public Long getUserName() {
+    public String getUserName() {
         return userName;
     }
 
-    public void setUserName(Long userName) {
+    public void setUserName(String userName) {
         this.userName = userName;
     }
 
@@ -54,11 +55,11 @@ public class UserDto {
         this.activated_on = activated_on;
     }
 
-    public Provider getProvider() {
+    public Long getProvider() {
         return providerId;
     }
 
-    public void setProvider(Provider providerId) {
+    public void setProvider(Long providerId) {
         this.providerId = providerId;
     }
 }

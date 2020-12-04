@@ -25,7 +25,7 @@ public class Device implements Serializable {
     private Long deviceExtId;
 
     @Column(name = "device_name", nullable = false)
-    private Long deviceName;
+    private String deviceName;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
@@ -82,11 +82,11 @@ public class Device implements Serializable {
         this.deviceExtId = deviceExtId;
     }
 
-    public Long getDeviceName() {
+    public String getDeviceName() {
         return deviceName;
     }
 
-    public void setDeviceName(Long deviceName) {
+    public void setDeviceName(String deviceName) {
         this.deviceName = deviceName;
     }
 
@@ -128,5 +128,13 @@ public class Device implements Serializable {
 
     public void setUpdated_At(LocalDateTime updated_At) {
         this.updated_At = updated_At;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

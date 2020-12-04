@@ -27,7 +27,7 @@ public class Provider implements Serializable {
     private Long providerExtId;
 
     @Column(name = "provider_name", nullable = false)
-    private Long providerName;
+    private String providerName;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
@@ -86,11 +86,11 @@ public class Provider implements Serializable {
         this.providerExtId = providerExtId;
     }
 
-    public Long getProviderName() {
+    public String getProviderName() {
         return providerName;
     }
 
-    public void setProviderName(Long providerName) {
+    public void setProviderName(String providerName) {
         this.providerName = providerName;
     }
 

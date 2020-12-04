@@ -27,7 +27,7 @@ public class User implements Serializable {
     private Long userExtId;
 
     @Column(name = "user_name", nullable = false)
-    private Long userName;
+    private String userName;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
@@ -89,11 +89,11 @@ public class User implements Serializable {
         this.userExtId = userExtId;
     }
 
-    public Long getUserName() {
+    public String getUserName() {
         return userName;
     }
 
-    public void setUserName(Long userName) {
+    public void setUserName(String userName) {
         this.userName = userName;
     }
 
@@ -135,5 +135,13 @@ public class User implements Serializable {
 
     public void setUpdated_At(LocalDateTime updated_At) {
         this.updated_At = updated_At;
+    }
+
+    public Provider getProvider() {
+        return provider;
+    }
+
+    public void setProvider(Provider provider) {
+        this.provider = provider;
     }
 }
