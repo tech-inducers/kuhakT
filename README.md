@@ -1,4 +1,5 @@
 # Welcome to the kuhakT-open-source IOT platform
+kuhakT - the open-source IOT platform
 
 ## Introduction
 kuhakT is a open-source IOT platform, it has been designed in the view of following layers and can be tailored using organization specific requirements
