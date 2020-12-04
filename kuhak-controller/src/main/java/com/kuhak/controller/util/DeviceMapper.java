@@ -5,7 +5,9 @@ import com.kuhak.controller.entity.Device;
 import com.kuhak.controller.entity.DeviceStatus;
 import com.kuhak.controller.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class DeviceMapper {
 
     @Autowired
