@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.kuhak.controller.dto.ProviderDto;
 import com.kuhak.controller.entity.Provider;
-import com.kuhak.controller.exception.ResourceNotFoundException;
 import com.kuhak.controller.repository.ProviderRepository;
 import com.kuhak.controller.service.ProviderService;
 import com.kuhak.controller.util.ProviderMapper;
@@ -34,9 +33,14 @@ public class ProviderServiceImpl implements ProviderService {
 
 	@Override
 	public Provider getProvider(Long providerId) {
-		return providerRepo.findById(providerId).orElseThrow(
-				() -> new ResourceNotFoundException("Provider not found with id :" + providerId.toString()));
-
+		try {
+			return providerRepo.findById(providerId)
+					.orElseThrow(() -> new Exception("Provider not found with id :" + providerId.toString()));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	@Override
