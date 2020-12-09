@@ -1,15 +1,18 @@
 package com.kuhak.controller.service;
 
-import com.kuhak.controller.entity.Device;
-
 import java.util.List;
 
+import com.kuhak.controller.dto.DeviceDto;
+import com.kuhak.controller.entity.Device;
+
 public interface DeviceService {
+	Device createOrUpdateDevice(Device device);
 
-    Device createOrUpdateDevice(Device device);
-    List<Device> getAllDevice();
-    Device getDeviceById(Long id);
-    void deleteDevice(Long id);
+	List<Device> getAllDevice();
 
+	Device getDeviceById(Long id);
 
+	void deleteDevice(Long id);
+
+	DeviceDto changeStatus(DeviceDto device);
 }
