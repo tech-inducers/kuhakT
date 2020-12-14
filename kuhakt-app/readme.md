@@ -1,1 +1,1 @@
-# App to manage prodivers and devices
+# App to manage providers and devices
