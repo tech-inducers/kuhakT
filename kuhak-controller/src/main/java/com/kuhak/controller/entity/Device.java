@@ -11,7 +11,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "device")
+@Table(name = "k_device")
 public class Device implements Serializable {
 
     private static final long serialVersionUID = 1L;

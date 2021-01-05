@@ -13,7 +13,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "user")
+@Table(name = "k_user")
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;

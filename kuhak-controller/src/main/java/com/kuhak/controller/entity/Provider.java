@@ -13,7 +13,7 @@ import java.util.Set;
 
 
 @Entity
-@Table(name = "provider")
+@Table(name = "k_provider")
 public class Provider implements Serializable {
 
     private static final long serialVersionUID = 1L;
