@@ -126,6 +126,24 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>dockerfile-maven-plugin</artifactId>
+				<version>1.4.0</version>
+				<executions>
+					<execution>
+						<id>default</id>
+						<goals>
+							<goal>build</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<repository>kuhak-controller</repository>
+					<tag>${docker.image.tag}</tag>
+					<pullNewerImage>false</pullNewerImage>
+				</configuration>
+			</plugin>
 
 			<plugin>
 				<groupId>org.springdoc</groupId>
