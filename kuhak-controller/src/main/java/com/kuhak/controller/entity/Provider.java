@@ -3,7 +3,7 @@ package com.kuhak.controller.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-import com.sun.istack.NotNull;
+//import com.sun.istack.NotNull;
 
 import javax.persistence.*;
 import java.io.Serializable;
