@@ -4,8 +4,10 @@ import com.kuhak.controller.entity.Device;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface DeviceRepository extends JpaRepository<Device, Long> {
 	
-	public Device findByDeviceExtId(Long deviceExtId);
+	Optional<Device> findByDeviceExtId(Long deviceExtId);
 }

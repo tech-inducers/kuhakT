@@ -44,6 +44,12 @@ public class ProvicerController {
 		return providerMapper.mapProviderToProviderDto(provider);
 	}
 
+	@GetMapping("/externalid/{extid}")
+	public ProviderDto getProviderByExtId(@PathVariable(value = "extid") Long providerExtId) {
+		Provider provider = providerService.getProviderByExtId(providerExtId);
+		return providerMapper.mapProviderToProviderDto(provider);
+	}
+
 	// Create Provider
 	@PostMapping
 	public ProviderDto createProvider(@RequestBody ProviderDto providerDto) {

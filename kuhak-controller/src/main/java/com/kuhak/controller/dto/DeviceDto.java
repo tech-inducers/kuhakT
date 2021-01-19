@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 public class DeviceDto {
 
     Long deviceExtId;
+    Long deviceId;
     String deviceName;
     String status;
     LocalDateTime validUpto;
@@ -58,5 +59,13 @@ public class DeviceDto {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public Long getDeviceId() {
+        return deviceId;
+    }
+
+    public void setDeviceId(Long deviceId) {
+        this.deviceId = deviceId;
     }
 }

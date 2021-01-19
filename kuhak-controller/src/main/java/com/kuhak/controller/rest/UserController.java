@@ -33,6 +33,12 @@ public class UserController {
         return userMapper.mapUserToUserDto(user);
     }
 
+    @GetMapping("/externalid/{extid}")
+    public UserDto getUserByExtId(@PathVariable(value = "extid") Long userExtId){
+        User user = userService.getUserByExtId(userExtId);
+        return userMapper.mapUserToUserDto(user);
+    }
+
     //Create User
     @PostMapping
     public UserDto createUser(@RequestBody UserDto userDto){

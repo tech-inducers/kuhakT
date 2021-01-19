@@ -39,14 +39,20 @@ public class DeviceController {
 				.collect(Collectors.toList());
 	}
 
-	// Get User by Id
+
 	@GetMapping("/{id}")
 	public DeviceDto getDeviceById(@PathVariable(value = "id") Long deviceId) {
 		Device device = deviceService.getDeviceById(deviceId);
 		return deviceMapper.mapDeviceToDeviceDto(device);
 	}
 
-	// Create User
+	@GetMapping("/externalid/{extid}")
+	public DeviceDto getDeviceByExtId(@PathVariable(value = "extid") Long deviceExtId) {
+		Device device = deviceService.getDeviceByExtId(deviceExtId);
+		return deviceMapper.mapDeviceToDeviceDto(device);
+	}
+
+
 	@PostMapping
 	public DeviceDto createDevice(@RequestBody DeviceDto deviceDto) {
 		Device device = deviceService.createOrUpdateDevice(deviceMapper.mapDeviceDtoToDevice(deviceDto));

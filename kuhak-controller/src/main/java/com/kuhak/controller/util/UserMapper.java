@@ -17,10 +17,12 @@ public class UserMapper {
     public UserDto mapUserToUserDto(User user){
         UserDto userDto = new UserDto();
         userDto.setUserExtId(user.getUserExtId());
+        userDto.setUserId(user.getUserId());
         userDto.setUserName(user.getUserName());
         userDto.setStatus(user.getStatus().toString());
         userDto.setActivated_on(user.getActivated_on());
         userDto.setValidUpto(user.getValidUpto());
+        userDto.setProviderId(user.getProvider().getProviderId());
 
         return userDto;
     }
@@ -28,6 +30,7 @@ public class UserMapper {
     public User mapUserDtoToUser(UserDto userDto ){
         User user = new User();
         user.setUserExtId(userDto.getUserExtId());
+        user.setUserId(userDto.getUserId());
         user.setUserName(userDto.getUserName());
         user.setStatus(UserStatus.valueOf(userDto.getStatus()));
         user.setActivated_on(userDto.getActivated_on());

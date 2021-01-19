@@ -13,6 +13,8 @@ public interface ProviderService {
 
 	Provider getProvider(Long providerId);
 
+	Provider getProviderByExtId(Long providerExtId);
+
 	void deleteProvider(Long providerId);
 
 	ProviderDto changeStatus(ProviderDto device);

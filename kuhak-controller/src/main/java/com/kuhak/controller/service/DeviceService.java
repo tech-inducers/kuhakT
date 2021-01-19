@@ -12,6 +12,8 @@ public interface DeviceService {
 
 	Device getDeviceById(Long id);
 
+	Device getDeviceByExtId(Long extId);
+
 	void deleteDevice(Long id);
 
 	DeviceDto changeStatus(DeviceDto device);

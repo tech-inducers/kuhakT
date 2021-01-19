@@ -17,10 +17,12 @@ public class DeviceMapper {
 	public DeviceDto mapDeviceToDeviceDto(Device device) {
 		DeviceDto deviceDto = new DeviceDto();
 		deviceDto.setDeviceExtId(device.getDeviceExtId());
+		deviceDto.setDeviceId(device.getDeviceId());
 		deviceDto.setDeviceName(device.getDeviceName());
 		deviceDto.setStatus(device.getStatus().toString());
 		deviceDto.setActivated_on(device.getActivated_on());
 		deviceDto.setValidUpto(device.getValidUpto());
+		deviceDto.setUserId(device.getUser().getUserId());
 
 		return deviceDto;
 	}
@@ -28,6 +30,7 @@ public class DeviceMapper {
 	public Device mapDeviceDtoToDevice(DeviceDto deviceDto) {
 		Device device = new Device();
 		device.setDeviceExtId(deviceDto.getDeviceExtId());
+		device.setDeviceId(deviceDto.getDeviceId());
 		device.setDeviceName(deviceDto.getDeviceName());
 		device.setStatus(DeviceStatus.valueOf(deviceDto.getStatus()));
 		device.setActivated_on(deviceDto.getActivated_on());
