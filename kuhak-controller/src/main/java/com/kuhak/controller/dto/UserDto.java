@@ -56,7 +56,7 @@ public class UserDto {
         this.activated_on = activated_on;
     }
 
-    public Long getProvider() {
+    public Long getProviderId() {
         return providerId;
     }
 

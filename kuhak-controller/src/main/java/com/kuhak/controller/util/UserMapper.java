@@ -35,7 +35,7 @@ public class UserMapper {
         user.setStatus(UserStatus.valueOf(userDto.getStatus()));
         user.setActivated_on(userDto.getActivated_on());
         user.setValidUpto(userDto.getValidUpto());
-        user.setProvider(providerService.getProvider(userDto.getProvider()));
+        user.setProvider(providerService.getProvider(userDto.getProviderId()));
 
         return user;
     }
