@@ -1,5 +1,5 @@
 import * as React from "react";
-import UserService from "../../services/UserManagementService";
+// import UserService from "../../services/UserManagementService";
 import { Table, Space} from 'antd';
 
 class UserMangementContainer extends React.Component<any, any> {
@@ -19,7 +19,7 @@ class UserMangementContainer extends React.Component<any, any> {
               title: 'User Name',
               dataIndex: 'userName',
               key: 'userName',
-              render: (text: any) => <a>{text}</a>,
+              render: (text: any) => text,
             },
             {
               title: 'Status',
@@ -41,7 +41,7 @@ class UserMangementContainer extends React.Component<any, any> {
               key: 'action',
               render: (text: any, record: any) => (
                 <Space size="middle">
-                  <a>View</a>
+                  View
                 </Space>
               ),
             },
