@@ -6,6 +6,7 @@ import { Layout, Menu, Result, Button} from 'antd';
 import { UserOutlined, CloudServerOutlined , DeliveredProcedureOutlined  , LogoutOutlined } from '@ant-design/icons';
 import Login from "./components/Login";
 import UserManagement from "./components/UserManagement";
+import ProviderManagement from "./components/ProviderManagement";
 import PageAccessRoute from './utils/PageAccessRoute';
 import { logout } from './store/actions/aclManagementActions';
 // const { SubMenu } = Menu;
@@ -59,10 +60,10 @@ class App extends React.Component<any, any>{
                                 style={{ height: '100%', borderRight: 0 }}
                             >
                                 <Menu.Item key="1" icon={<DeliveredProcedureOutlined  />}>
-                                    Provider
+                                    <Link to="providers" >Providers</Link>
                                 </Menu.Item>
                                 <Menu.Item key="2" icon={<UserOutlined />}>
-                                    Usermangment
+                                    <Link to="users" >Usermangment</Link>
                                 </Menu.Item>
                                 <Menu.Item key="3" icon={<CloudServerOutlined  />}>
                                     Device
@@ -96,6 +97,7 @@ class App extends React.Component<any, any>{
                                 <React.Suspense fallback={<></>}>
                                     <Route exact path="/login" component={Login} />
                                     <PageAccessRoute path="/users" component={UserManagement} />
+                                    <PageAccessRoute path="/providers" component={ProviderManagement} />
                                     <Route path='/not-found' component={NotFound} />
                                     {/* <Route render={(props) => {
                                         let vaildUrl = ['/','/upload-pipe-json','/upload-pipe-compress','/dashboard', '/userManagement', '/roleManagement', '/permissionManagement', '/partners', '/pipe', '/add-pipe', '/edit-pipe', '/upload-pipe'];

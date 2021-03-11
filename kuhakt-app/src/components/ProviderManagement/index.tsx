@@ -1,18 +1,18 @@
 import * as React from "react";
-import UserService from "../../services/UserManagementService";
+import ProviderManagementService from "../../services/ProviderManagementService";
 import { Table, Space, Spin } from 'antd';
 
-class UserMangementContainer extends React.Component<any, any> {
-    private userService: any;
+class ProviderManagement extends React.Component<any, any> {
+    private providerService: any;
     constructor(props: any) {
         super(props);
         this.state = {
             loading: false,
             data: [],
             columns: [{
-                title: 'User Name',
-                dataIndex: 'userName',
-                key: 'userName',
+                title: 'Provider Name',
+                dataIndex: 'providerName',
+                key: 'providerName',
                 render: (text: any) => text,
             },
             {
@@ -40,10 +40,10 @@ class UserMangementContainer extends React.Component<any, any> {
                 ),
             }]
         };
-        this.userService = new UserService();
+        this.providerService = new ProviderManagementService();
     }
     componentDidMount() {
-        this.getUsers();
+        this.getProviders();
     }
     loader = (status: boolean) => {
         this.setState({
@@ -51,10 +51,10 @@ class UserMangementContainer extends React.Component<any, any> {
         });
     };
 
-    getUsers = () => {
+    getProviders = () => {
         this.loader(true);
 
-        this.userService.fetchUsers().then(({ data }: any) => {
+        this.providerService.fetchProviders().then(({ data }: any) => {
             this.setState({
                 ...this.state,
                 data: data
@@ -75,4 +75,4 @@ class UserMangementContainer extends React.Component<any, any> {
     }
 }
 
-export default UserMangementContainer;
+export default ProviderManagement;

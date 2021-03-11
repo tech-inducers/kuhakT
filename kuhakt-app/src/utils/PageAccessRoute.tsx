@@ -21,8 +21,9 @@ const PageAccessRoute = ({
     sessionHasBeenFetched,
     ...otherProps
 }: IProps) => {
-    const checkAuthorities = (props: any) =>
-        true ? (
+    const checkAuthorities = (props: any) =>{
+        console.log('props', props)
+        return true ? (
             <Component {...props} />
         ) : (
             <Result
@@ -32,6 +33,7 @@ const PageAccessRoute = ({
                 extra={<Link to="/"><Button type="primary">Back Home</Button></Link>}
             />
         );
+    }
 
 
     const renderRedirect = (props:any) => {
@@ -50,6 +52,7 @@ const PageAccessRoute = ({
     return (
         <>
             <Route
+                path={path}
                 {...otherProps}
                 render={renderRedirect}
             />
