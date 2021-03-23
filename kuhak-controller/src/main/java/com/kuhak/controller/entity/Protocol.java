@@ -18,8 +18,8 @@ public class Protocol implements Serializable {
     @Column(name = "protocol_name", nullable = false, unique = true)
     private String protocolName;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "protocol")
-    private Set<Gateway> gateways;
+    /*@OneToMany(fetch = FetchType.LAZY, mappedBy = "protocol")
+    private Set<Gateway> gateways;*/
 
     public Long getProtocolId() {
         return protocolId;
@@ -37,11 +37,11 @@ public class Protocol implements Serializable {
         this.protocolName = protocolName;
     }
 
-    public Set<Gateway> getGateways() {
+    /*public Set<Gateway> getGateways() {
         return gateways;
     }
 
     public void setGateways(Set<Gateway> gateways) {
         this.gateways = gateways;
-    }
+    }*/
 }

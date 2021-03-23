@@ -9,7 +9,6 @@ public class ProtocolDto {
 
     Long protocolId;
     String protocolName;
-    Set<GatewayDto> gateways;
 
     public Long getProtocolId() {
         return protocolId;
@@ -27,11 +26,4 @@ public class ProtocolDto {
         this.protocolName = protocolName;
     }
 
-    public Set<GatewayDto> getGateways() {
-        return gateways;
-    }
-
-    public void setGateways(Set<GatewayDto> gateways) {
-        this.gateways = gateways;
-    }
 }
