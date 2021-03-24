@@ -1,7 +1,10 @@
 package com.kuhak.controller.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
+import com.kuhak.controller.entity.Gateway;
+import com.kuhak.controller.repository.GatewayRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,11 +22,16 @@ public class DeviceServiceImpl implements DeviceService {
 	DeviceRepository deviceRepo;
 
 	@Autowired
+	GatewayRepository gatewayRepository;
+
+	@Autowired
 	DeviceMapper deviceMapper;
 
 	@Override
 	public Device createOrUpdateDevice(Device device) {
-		return deviceRepo.save(device);
+		Device d = deviceRepo.save(device);
+		incrementGatewayDeviceCount(device.getGateway().getGatewayId());
+		return d;
 	}
 
 	@Override
@@ -55,5 +63,11 @@ public class DeviceServiceImpl implements DeviceService {
 
 		Device updatedDevice = deviceRepo.saveAndFlush(deviceMapper.mapDeviceDtoToDevice(device));
 		return deviceMapper.mapDeviceToDeviceDto(updatedDevice);
+	}
+
+	private void incrementGatewayDeviceCount(Long gatewayId){
+		Gateway gwO = gatewayRepository.findById(gatewayId).get();
+		gwO.setDeviceCount(gwO.getDeviceCount()+1);
+		gatewayRepository.save(gwO);
 	}
 }

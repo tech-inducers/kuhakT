@@ -12,6 +12,8 @@ public class DeviceDto {
     LocalDateTime validUpto;
     LocalDateTime activated_on;
     Long userId;
+    String deviceType;
+    Long protocolId;
 
     public Long getDeviceExtId() {
         return deviceExtId;
@@ -67,5 +69,22 @@ public class DeviceDto {
 
     public void setDeviceId(Long deviceId) {
         this.deviceId = deviceId;
+    }
+
+
+    public Long getProtocolId() {
+        return protocolId;
+    }
+
+    public void setProtocolId(Long protocolId) {
+        this.protocolId = protocolId;
+    }
+
+    public String getDeviceType() {
+        return deviceType;
+    }
+
+    public void setDeviceType(String deviceType) {
+        this.deviceType = deviceType;
     }
 }

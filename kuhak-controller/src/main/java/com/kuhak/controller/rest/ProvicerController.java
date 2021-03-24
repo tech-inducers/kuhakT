@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
+import com.kuhak.controller.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,6 +50,7 @@ public class ProvicerController {
 	// Create Provider
 	@PostMapping
 	public ProviderDto createProvider(@RequestBody ProviderDto providerDto) {
+		providerDto.setStatus("NEW");
 		Provider provider = providerService
 				.createORupdateProvider(providerMapper.mapProviderDtoToProvider(providerDto));
 		return providerMapper.mapProviderToProviderDto(provider);
@@ -60,7 +62,8 @@ public class ProvicerController {
 		try {
 			return new ResponseEntity<ProviderDto>(providerService.changeStatus(provider), HttpStatus.OK);
 		} catch (Exception Ex) {
-			return new ResponseEntity<ProviderDto>(providerService.changeStatus(provider), HttpStatus.OK);
+			throw new ResourceNotFoundException("Error while changing the status of provider with ID ===>"
+					+provider.getProviderId());
 		}
 	}
 }

@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -31,6 +33,10 @@ public class Device implements Serializable {
     @Column(name = "status", nullable = false)
     private DeviceStatus status;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name="device_type", nullable = false)
+    private DeviceType deviceType;
+
     @JsonFormat(pattern = "yyyy-MM-ddTHH:mm:ss")
     @Column(name = "valid_upto", nullable = false)
     @JsonSerialize(using = LocalDateTimeSerializer.class)
@@ -55,6 +61,16 @@ public class Device implements Serializable {
     @NotNull
     @JsonIgnoreProperties("device")
     private User user;
+
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name="protocol_id", nullable = false)
+    @NotNull
+    private Protocol protocol;
+
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name="gateway_id", nullable = false)
+    @NotNull
+    private Gateway gateway;
 
     @PrePersist
     protected void onCreate() {
@@ -136,5 +152,29 @@ public class Device implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public DeviceType getDeviceType() {
+        return deviceType;
+    }
+
+    public void setDeviceType(DeviceType deviceType) {
+        this.deviceType = deviceType;
+    }
+
+    public Protocol getProtocol() {
+        return protocol;
+    }
+
+    public void setProtocol(Protocol protocol) {
+        this.protocol = protocol;
+    }
+
+    public Gateway getGateway() {
+        return gateway;
+    }
+
+    public void setGateway(Gateway gateway) {
+        this.gateway = gateway;
     }
 }

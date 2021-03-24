@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
+import com.kuhak.controller.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -55,6 +56,7 @@ public class DeviceController {
 
 	@PostMapping
 	public DeviceDto createDevice(@RequestBody DeviceDto deviceDto) {
+		deviceDto.setStatus("NEW");
 		Device device = deviceService.createOrUpdateDevice(deviceMapper.mapDeviceDtoToDevice(deviceDto));
 		return deviceMapper.mapDeviceToDeviceDto(device);
 	}
@@ -65,7 +67,8 @@ public class DeviceController {
 		try {
 			return new ResponseEntity<DeviceDto>(deviceService.changeStatus(device), HttpStatus.OK);
 		} catch (Exception Ex) {
-			return new ResponseEntity<DeviceDto>(deviceService.changeStatus(device), HttpStatus.OK);
+			throw new ResourceNotFoundException("Error while changing the status of Device with ID ===>"
+					+device.getDeviceId());
 		}
 	}
 }
