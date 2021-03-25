@@ -53,7 +53,7 @@ public class UserController {
     }
 
     //status change
-    @PostMapping
+    @PostMapping("/changestatus")
     public ResponseEntity<?> changeStatus(@Valid @RequestBody UserDto userDto){
         try{
             return new ResponseEntity<UserDto>(userMapper.mapUserToUserDto(userService
