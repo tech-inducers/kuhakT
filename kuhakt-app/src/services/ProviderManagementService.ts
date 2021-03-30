@@ -12,6 +12,14 @@ export default class ProviderManagementService {
     return this.axiosInstance.get(this.providerManagmentBaseUrl);
   }
 
+  public createProvider = (requestData: any) => {
+    return this.axiosInstance.post(this.providerManagmentBaseUrl, requestData);
+  }
+
+  public updateProvider = (requestData: any) => {
+    return this.axiosInstance.post(this.providerManagmentBaseUrl + '/status-change', requestData);
+  }
+
 
   // public getUserByExtId = (extid: any) => {
   //   return this.axiosInstance.get(this.userManagmentBaseUrl + `externalid/${extid}`);

@@ -3,13 +3,13 @@ import { connect } from "react-redux";
 import { Switch, Route, Link} from "react-router-dom";
 import './App.css';
 import { Layout, Menu, Result, Button} from 'antd';
-import { UserOutlined, CloudServerOutlined , DeliveredProcedureOutlined  , LogoutOutlined } from '@ant-design/icons';
+import { LogoutOutlined, SettingOutlined  } from '@ant-design/icons'; // UserOutlined, CloudServerOutlined , DeliveredProcedureOutlined  
 import Login from "./components/Login";
 import UserManagement from "./components/UserManagement";
 import ProviderManagement from "./components/ProviderManagement";
 import PageAccessRoute from './utils/PageAccessRoute';
 import { logout } from './store/actions/aclManagementActions';
-// const { SubMenu } = Menu;
+const { SubMenu } = Menu;
 const { Header, Footer, Sider, Content } = Layout;
 
 const NotFound = () => <div className="appcontent"><div className="row "><div className="tile xl-12" >
@@ -59,15 +59,16 @@ class App extends React.Component<any, any>{
                                 // defaultOpenKeys={['sub1']}
                                 style={{ height: '100%', borderRight: 0 }}
                             >
-                                <Menu.Item key="1" icon={<DeliveredProcedureOutlined  />}>
-                                    <Link to="providers" >Providers</Link>
-                                </Menu.Item>
-                                <Menu.Item key="2" icon={<UserOutlined />}>
-                                    <Link to="users" >Usermangment</Link>
-                                </Menu.Item>
-                                <Menu.Item key="3" icon={<CloudServerOutlined  />}>
-                                    Device
-                                </Menu.Item>
+                                <SubMenu key="sub1" icon={<SettingOutlined />} title="CDM">
+                                    <Menu.Item key="11"><Link to="providers" >Providers</Link></Menu.Item>
+                                    <Menu.Item key="12"><Link to="users" >Users</Link></Menu.Item>
+                                    <Menu.Item key="13">Devices</Menu.Item>
+                                </SubMenu>
+                                <SubMenu key="sub2" icon={<SettingOutlined />} title="Gateway & Proxy">
+                                    <Menu.Item key="21"><Link to="protocol" >Protocol</Link></Menu.Item>
+                                    <Menu.Item key="22"><Link to="gateway" >Gateway</Link></Menu.Item>
+                                </SubMenu>
+                                
 
                                 <Menu.Item key="4" icon={<LogoutOutlined />} onClick={this.onLogOut}>
                                     Logout
