@@ -27,6 +27,11 @@ class ProviderManagement extends React.Component<any, any> {
                 dataIndex: 'providerName',
                 key: 'providerName',
                 render: (text: any) => text,
+            },{
+                title: 'Provider ExtId',
+                dataIndex: 'providerExtId',
+                key: 'providerExtId',
+                render: (text: any) => text,
             },
             {
                 title: 'Status',
@@ -126,23 +131,17 @@ class ProviderManagement extends React.Component<any, any> {
             visible: true,
             editMode: true
         },()=> {
-            // this.setState({
-            //     visible: true,
-            //     editMode: true
-            // });
+            this.formRef.current!.resetFields();
         });
     };
 
     showAddDrawer = () => {
         this.setState({
-            selectedEditRow: null
+            selectedEditRow: null,
+            visible: true,
+            editMode: false
         },() => {
-            setTimeout(() => { 
-                this.setState({
-                    visible: true,
-                    editMode: false
-                });
-            }, 1000);            
+            this.formRef.current!.resetFields();
         });
     };
 
@@ -175,7 +174,7 @@ class ProviderManagement extends React.Component<any, any> {
                     <Table columns={columns} dataSource={data} />          
                 </Spin>
                 <Drawer
-                    title="Create a Provider"
+                    title={this.state.editMode ? "Edit Provider" :"Create a Provider"}
                     width={window.innerWidth > 900 ? 720 : window.innerWidth - 100}
                     onClose={this.onClose}
                     visible={this.state.visible}
@@ -191,7 +190,7 @@ class ProviderManagement extends React.Component<any, any> {
                                     Cancel
                                 </Button>
                                 <Button form="providerAddEdit" key="submit" htmlType="submit" type="primary">
-                                    Submit
+                                    {this.state.editMode ?'Save' : 'Submit'}
                                 </Button>
                             </div>
                         </Spin>
