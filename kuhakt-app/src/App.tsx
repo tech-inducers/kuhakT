@@ -7,6 +7,8 @@ import { LogoutOutlined, SettingOutlined  } from '@ant-design/icons'; // UserOut
 import Login from "./components/Login";
 import UserManagement from "./components/UserManagement";
 import ProviderManagement from "./components/ProviderManagement";
+import ProtocolManagement from "./components/ProtocolManagement";
+import GatewayMangement from "./components/GatewayManagement";
 import PageAccessRoute from './utils/PageAccessRoute';
 import { logout } from './store/actions/aclManagementActions';
 const { SubMenu } = Menu;
@@ -22,7 +24,7 @@ const NotFound = () => <div className="appcontent"><div className="row "><div cl
 </div></div></div>
 
 class App extends React.Component<any, any>{
-    private history: any;    
+    private history: any;
     constructor(props: any) {
         super(props);
         this.state = {
@@ -55,42 +57,22 @@ class App extends React.Component<any, any>{
                         >
                             <Menu
                                 mode="inline"
-                                // defaultSelectedKeys={['1']}
-                                // defaultOpenKeys={['sub1']}
-                                style={{ height: '100%', borderRight: 0 }}
+                                defaultSelectedKeys={['sub111']}
+                                defaultOpenKeys={['sub1']}
+                                style={{ height: '100%', borderRight: 1 }}
                             >
                                 <SubMenu key="sub1" icon={<SettingOutlined />} title="CDM">
-                                    <Menu.Item key="11"><Link to="providers" >Providers</Link></Menu.Item>
-                                    <Menu.Item key="12"><Link to="users" >Users</Link></Menu.Item>
-                                    <Menu.Item key="13">Devices</Menu.Item>
+                                    <Menu.Item key="sub111"><Link to="providers" >Providers</Link></Menu.Item>
+                                    <Menu.Item key="sub112"><Link to="users" >Users</Link></Menu.Item>
+                                    <Menu.Item key="sub113">Devices</Menu.Item>
                                 </SubMenu>
                                 <SubMenu key="sub2" icon={<SettingOutlined />} title="Gateway & Proxy">
-                                    <Menu.Item key="21"><Link to="protocol" >Protocol</Link></Menu.Item>
-                                    <Menu.Item key="22"><Link to="gateway" >Gateway</Link></Menu.Item>
+                                    <Menu.Item key="sub221"><Link to="protocol" >Protocol</Link></Menu.Item>
+                                    <Menu.Item key="sub222"><Link to="gateway" >Gateway</Link></Menu.Item>
                                 </SubMenu>
-                                
-
-                                <Menu.Item key="4" icon={<LogoutOutlined />} onClick={this.onLogOut}>
+                                <Menu.Item key="sub3" icon={<LogoutOutlined />} onClick={this.onLogOut}>
                                     Logout
                                 </Menu.Item>
-                                {/* <SubMenu key="sub1" icon={<UserOutlined />} title="subnav 1">
-                                    <Menu.Item key="1">option1</Menu.Item>
-                                    <Menu.Item key="2">option2</Menu.Item>
-                                    <Menu.Item key="3">option3</Menu.Item>
-                                    <Menu.Item key="4">option4</Menu.Item>
-                                </SubMenu>
-                                <SubMenu key="sub2" icon={<LaptopOutlined />} title="subnav 2">
-                                    <Menu.Item key="5">option5</Menu.Item>
-                                    <Menu.Item key="6">option6</Menu.Item>
-                                    <Menu.Item key="7">option7</Menu.Item>
-                                    <Menu.Item key="8">option8</Menu.Item>
-                                </SubMenu>
-                                <SubMenu key="sub3" icon={<NotificationOutlined />} title="subnav 3">
-                                    <Menu.Item key="9">option9</Menu.Item>
-                                    <Menu.Item key="10">option10</Menu.Item>
-                                    <Menu.Item key="11">option11</Menu.Item>
-                                    <Menu.Item key="12">option12</Menu.Item>
-                                </SubMenu> */}
                             </Menu>
                         </Sider> : null }
                         <Content className="inner-content">
@@ -99,6 +81,8 @@ class App extends React.Component<any, any>{
                                     <Route exact path="/login" component={Login} />
                                     <PageAccessRoute path="/users" component={UserManagement} />
                                     <PageAccessRoute path="/providers" component={ProviderManagement} />
+                                    <PageAccessRoute path="/protocol" component={ProtocolManagement} />
+                                    <PageAccessRoute path="/gateway" component={GatewayMangement} />
                                     <Route path='/not-found' component={NotFound} />
                                     {/* <Route render={(props) => {
                                         let vaildUrl = ['/','/upload-pipe-json','/upload-pipe-compress','/dashboard', '/userManagement', '/roleManagement', '/permissionManagement', '/partners', '/pipe', '/add-pipe', '/edit-pipe', '/upload-pipe'];

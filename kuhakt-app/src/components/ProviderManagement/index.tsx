@@ -73,9 +73,15 @@ class ProviderManagement extends React.Component<any, any> {
         this.loader(true);
 
         this.providerService.fetchProviders().then(({ data }: any) => {
+            
             this.setState({
                 ...this.state,
-                data: data
+                data: data.map((item: any, i: number) => {
+                    return {
+                        ...item,
+                        'key' : 'pro'+i
+                    }
+                })
             });
             this.loader(false);
         }).catch((error: any) => {
@@ -171,7 +177,7 @@ class ProviderManagement extends React.Component<any, any> {
                             </Button>
                         </Col>
                     </Row>
-                    <Table columns={columns} dataSource={data} />          
+                    <Table columns={columns} dataSource={data} key="providerList"/>          
                 </Spin>
                 <Drawer
                     title={this.state.editMode ? "Edit Provider" :"Create a Provider"}
@@ -264,9 +270,9 @@ class ProviderManagement extends React.Component<any, any> {
                                         rules={[{ required: true, message: 'Please choose status' }]}
                                     >
                                         <Select placeholder="Please choose the status">
-                                            <Option value="new">New</Option>
-                                            <Option value="active">Active</Option>
-                                            <Option value="inactive">Inactive</Option>
+                                            <Option key="new" value="new">New</Option>
+                                            <Option key="active" value="active">Active</Option>
+                                            <Option key="inactive" value="inactive">Inactive</Option>
                                         </Select>
                                     </Form.Item>
                                 </Col>
