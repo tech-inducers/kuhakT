@@ -1,5 +1,7 @@
 package com.kuhak.controller.rest;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -69,6 +71,39 @@ public class DeviceController {
 		} catch (Exception Ex) {
 			throw new ResourceNotFoundException("Error while changing the status of Device with ID ===>"
 					+device.getDeviceId());
+		}
+	}
+
+	@PostMapping("/activate")
+	public ResponseEntity<?> activate(@Valid @RequestBody DeviceDto device) {
+
+		if(device.getStatus().equals("ACTIVE") ) {
+			device.setActivated_on(LocalDateTime.now());
+			try {
+				return new ResponseEntity<DeviceDto>(deviceService.update(device), HttpStatus.OK);
+			} catch (Exception Ex) {
+				throw new ResourceNotFoundException("Error while activating Device with ID ===>"
+						+ device.getDeviceId());
+			}
+		}else {
+			throw new ResourceNotFoundException("Invalid activation request for device with ID ==>"
+			+device.getDeviceId());
+		}
+	}
+
+	@PostMapping("/dactivate")
+	public ResponseEntity<?> dactivate(@Valid @RequestBody DeviceDto device) {
+
+		if(device.getStatus().equals("DEACTIVE")) {
+			device.setValidUpto(LocalDateTime.now());
+			try {
+				return new ResponseEntity<DeviceDto>(deviceService.update(device), HttpStatus.OK);
+			} catch (Exception Ex) {
+				throw new ResourceNotFoundException("Error while deactivating Device with ID ===>"
+						+ device.getDeviceId());
+			}
+		}else {
+			throw new ResourceNotFoundException("Invalid deactivation request for device id -->"+device.getDeviceId());
 		}
 	}
 

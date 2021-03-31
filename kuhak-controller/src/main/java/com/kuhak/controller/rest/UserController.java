@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -66,5 +67,37 @@ public class UserController {
     @GetMapping("/gatalluser/provider/{providerid}")
     public List<UserDto> getAllUserByProviderId(@PathVariable (value = "providerid") Long providerId){
         return userService.getAllUserByProviderId(providerId);
+    }
+
+    @PostMapping("/activate")
+    public ResponseEntity<?> activate(@Valid @RequestBody UserDto userDto){
+        if(userDto.getStatus().equals("ACTIVE")){
+            userDto.setActivated_on(LocalDateTime.now());
+        try{
+            return new ResponseEntity<UserDto>(userMapper.mapUserToUserDto(userService
+                    .updateUser(userMapper.mapUserDtoToUser(userDto))), HttpStatus.OK);
+        }catch (Exception ex){
+            throw new ResourceNotFoundException("User not found with id ===>"+userDto.getUserId());
+        }}else{
+            throw new ResourceNotFoundException("Invalid activation request for user id -->"
+                    +userDto.getUserId());
+        }
+
+    }
+
+    @PostMapping("/deactivate")
+    public ResponseEntity<?> deactivate(@Valid @RequestBody UserDto userDto){
+        if(userDto.getStatus().equals("DEACTIVE")){
+            userDto.setValidUpto(LocalDateTime.now());
+        try{
+            return new ResponseEntity<UserDto>(userMapper.mapUserToUserDto(userService
+                    .updateUser(userMapper.mapUserDtoToUser(userDto))), HttpStatus.OK);
+        }catch (Exception ex){
+            throw new ResourceNotFoundException("User not found with id ===>"+userDto.getUserId());
+        }}else{
+            throw new ResourceNotFoundException("Invalid deactivation request for user id -->"
+                    +userDto.getUserId());
+        }
+
     }
 }

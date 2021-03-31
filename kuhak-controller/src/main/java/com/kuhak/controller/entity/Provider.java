@@ -34,12 +34,12 @@ public class Provider implements Serializable {
     private ProviderStatus status;
 
     @JsonFormat(pattern = "yyyy-MM-ddTHH:mm:ss")
-    @Column(name = "valid_upto", nullable = false)
+    @Column(name = "valid_upto")
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime validUpto;
 
     @JsonFormat(pattern = "yyyy-MM-ddTHH:mm:ss")
-    @Column(name = "activated_on", nullable = false)
+    @Column(name = "activated_on")
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime activated_on;
 

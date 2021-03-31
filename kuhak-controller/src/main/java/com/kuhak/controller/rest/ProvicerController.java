@@ -1,5 +1,6 @@
 package com.kuhak.controller.rest;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -63,6 +64,38 @@ public class ProvicerController {
 			return new ResponseEntity<ProviderDto>(providerService.update(provider), HttpStatus.OK);
 		} catch (Exception Ex) {
 			throw new ResourceNotFoundException("Error while changing the status of provider with ID ===>"
+					+provider.getProviderId());
+		}
+	}
+
+	@PostMapping("/activate")
+	public ResponseEntity<?> activate(@Valid @RequestBody ProviderDto provider) {
+		if(provider.getStatus().equals("ACTIVE") ) {
+			provider.setActivated_on(LocalDateTime.now());
+			try {
+				return new ResponseEntity<ProviderDto>(providerService.update(provider), HttpStatus.OK);
+			} catch (Exception Ex) {
+				throw new ResourceNotFoundException("Error while activating provider with ID ===>"
+						+ provider.getProviderId());
+			}
+		}else {
+			throw new ResourceNotFoundException("Invalid activation request for provider id -->"
+					+provider.getProviderId());
+		}
+	}
+
+	@PostMapping("/deactivate")
+	public ResponseEntity<?> deactivate(@Valid @RequestBody ProviderDto provider) {
+		if(provider.getStatus().equals("DEACTIVE") ) {
+			provider.setValidUpto(LocalDateTime.now());
+			try {
+				return new ResponseEntity<ProviderDto>(providerService.update(provider), HttpStatus.OK);
+			} catch (Exception Ex) {
+				throw new ResourceNotFoundException("Error while activating provider with ID ===>"
+						+ provider.getProviderId());
+			}
+		}else {
+			throw new ResourceNotFoundException("Invalid activation request for provider id -->"
 					+provider.getProviderId());
 		}
 	}
