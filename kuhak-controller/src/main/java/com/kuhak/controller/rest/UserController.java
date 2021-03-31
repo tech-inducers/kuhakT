@@ -48,18 +48,19 @@ public class UserController {
     @PostMapping
     public UserDto createUser(@RequestBody UserDto userDto){
         userDto.setStatus("NEW");
-        User user = userService.createOrUpdateUser(userMapper.mapUserDtoToUser(userDto));
+        User user = userService.createUser(userMapper.mapUserDtoToUser(userDto));
         return userMapper.mapUserToUserDto(user);
     }
 
     //status change
-    @PostMapping("/changestatus")
-    public ResponseEntity<?> changeStatus(@Valid @RequestBody UserDto userDto){
+    @PostMapping("/update")
+    public ResponseEntity<?> update(@Valid @RequestBody UserDto userDto){
         try{
             return new ResponseEntity<UserDto>(userMapper.mapUserToUserDto(userService
-                    .createOrUpdateUser(userMapper.mapUserDtoToUser(userDto))), HttpStatus.OK);
+                    .updateUser(userMapper.mapUserDtoToUser(userDto))), HttpStatus.OK);
         }catch (Exception ex){
             throw new ResourceNotFoundException("User not found with id ===>"+userDto.getUserId());
         }
+
     }
 }

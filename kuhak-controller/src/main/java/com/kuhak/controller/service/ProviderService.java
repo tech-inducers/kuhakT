@@ -17,6 +17,6 @@ public interface ProviderService {
 
 	void deleteProvider(Long providerId);
 
-	ProviderDto changeStatus(ProviderDto device);
+	ProviderDto update(ProviderDto device);
 
 }

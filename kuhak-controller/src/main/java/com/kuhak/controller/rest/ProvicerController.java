@@ -57,10 +57,10 @@ public class ProvicerController {
 	}
 
 	// Status Change
-	@PostMapping("/status-change")
+	@PostMapping("/update")
 	public ResponseEntity<?> changeStatus(@Valid @RequestBody ProviderDto provider) {
 		try {
-			return new ResponseEntity<ProviderDto>(providerService.changeStatus(provider), HttpStatus.OK);
+			return new ResponseEntity<ProviderDto>(providerService.update(provider), HttpStatus.OK);
 		} catch (Exception Ex) {
 			throw new ResourceNotFoundException("Error while changing the status of provider with ID ===>"
 					+provider.getProviderId());

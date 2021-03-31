@@ -17,5 +17,5 @@ public interface DeviceService {
 
 	void deleteDevice(Long id);
 
-	DeviceDto changeStatus(DeviceDto device);
+	DeviceDto update(DeviceDto device);
 }

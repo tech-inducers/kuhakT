@@ -62,10 +62,10 @@ public class DeviceController {
 	}
 
 	//Status Change
-	@PostMapping("/status-change")
-	public ResponseEntity<?> changeStatus(@Valid @RequestBody DeviceDto device) {
+	@PostMapping("/update")
+	public ResponseEntity<?> update(@Valid @RequestBody DeviceDto device) {
 		try {
-			return new ResponseEntity<DeviceDto>(deviceService.changeStatus(device), HttpStatus.OK);
+			return new ResponseEntity<DeviceDto>(deviceService.update(device), HttpStatus.OK);
 		} catch (Exception Ex) {
 			throw new ResourceNotFoundException("Error while changing the status of Device with ID ===>"
 					+device.getDeviceId());

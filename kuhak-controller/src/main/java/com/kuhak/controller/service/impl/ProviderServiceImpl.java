@@ -53,7 +53,11 @@ public class ProviderServiceImpl implements ProviderService {
 	}
 
 	@Override
-	public ProviderDto changeStatus(ProviderDto provider) {
+	public ProviderDto update(ProviderDto provider) {
+		if(!providerRepo.existsById(provider.getProviderId())){
+			throw new ResourceNotFoundException("provider not found with id:"
+					+ provider.getProviderId()+"ext id:"+provider.getProviderExtId());
+		}
 		Provider updatedProvider = providerRepo.saveAndFlush(providerMapper.mapProviderDtoToProvider(provider));
 		return providerMapper.mapProviderToProviderDto(updatedProvider);
 	}

@@ -18,7 +18,7 @@ public class UserServiceImpl implements UserService {
     UserRepository userRepo;
 
     @Override
-    public User createOrUpdateUser(User user) {
+    public User createUser(User user) {
         return userRepo.save(user);
     }
 
@@ -49,5 +49,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(Long userId) {
 
+    }
+
+    @Override
+    public User updateUser(User user) {
+        if(!userRepo.existsById(user.getUserId())){
+            throw new ResourceNotFoundException("User not found with id:"+
+            user.getUserId()+" ext id:"+user.getUserExtId());
+        }
+        return userRepo.save(user);
     }
 }

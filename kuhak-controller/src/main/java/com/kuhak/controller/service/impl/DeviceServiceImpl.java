@@ -58,9 +58,17 @@ public class DeviceServiceImpl implements DeviceService {
 
 	}
 
-	@Override
-	public DeviceDto changeStatus(DeviceDto device) {
 
+
+	@Override
+	public DeviceDto update(DeviceDto device) {
+
+		/*Device updatedDevice = deviceRepo.saveAndFlush(deviceMapper.mapDeviceDtoToDevice(device));
+		return deviceMapper.mapDeviceToDeviceDto(updatedDevice);*/
+		if(deviceRepo.existsById(device.getUserId())){
+			throw new ResourceNotFoundException("Device not found with id:"
+					+device.getDeviceId()+" ext id:"+device.getDeviceExtId());
+		}
 		Device updatedDevice = deviceRepo.saveAndFlush(deviceMapper.mapDeviceDtoToDevice(device));
 		return deviceMapper.mapDeviceToDeviceDto(updatedDevice);
 	}
