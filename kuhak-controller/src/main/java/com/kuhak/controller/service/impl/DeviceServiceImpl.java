@@ -2,6 +2,7 @@ package com.kuhak.controller.service.impl;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import com.kuhak.controller.entity.Gateway;
 import com.kuhak.controller.repository.GatewayRepository;
@@ -71,6 +72,23 @@ public class DeviceServiceImpl implements DeviceService {
 		}
 		Device updatedDevice = deviceRepo.saveAndFlush(deviceMapper.mapDeviceDtoToDevice(device));
 		return deviceMapper.mapDeviceToDeviceDto(updatedDevice);
+	}
+
+	@Override
+	public List<DeviceDto> getAllDeviceByUserId(Long userId) {
+		return deviceRepo.findByUserUserId(userId).stream().map(devR ->{
+			DeviceDto devdR = new DeviceDto();
+			devdR.setDeviceId(devR.getDeviceId());
+			devdR.setDeviceExtId(devR.getDeviceExtId());
+			devdR.setDeviceName(devdR.getDeviceName());
+			devdR.setStatus(devR.getStatus().toString());
+			devdR.setDeviceType(devR.getDeviceType().toString());
+			devdR.setUserId(devR.getUser().getUserId());
+			devdR.setValidUpto(devR.getValidUpto());
+			devdR.setProtocolId(devdR.getProtocolId());
+			 return devdR;
+		}).collect(Collectors.toList());
+
 	}
 
 	private void incrementGatewayDeviceCount(Long gatewayId){

@@ -18,4 +18,5 @@ public interface DeviceService {
 	void deleteDevice(Long id);
 
 	DeviceDto update(DeviceDto device);
+	List<DeviceDto> getAllDeviceByUserId(Long userId);
 }

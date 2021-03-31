@@ -1,5 +1,6 @@
 package com.kuhak.controller.service.impl;
 
+import com.kuhak.controller.dto.UserDto;
 import com.kuhak.controller.entity.User;
 
 import com.kuhak.controller.exception.ResourceNotFoundException;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -58,5 +60,21 @@ public class UserServiceImpl implements UserService {
             user.getUserId()+" ext id:"+user.getUserExtId());
         }
         return userRepo.save(user);
+    }
+
+    @Override
+    public List<UserDto> getAllUserByProviderId(Long providerId) {
+        return userRepo.findByProviderProviderId(providerId).stream().map(usrR -> {
+            UserDto usrdR = new UserDto();
+            usrdR.setProviderId(usrR.getProvider().getProviderId());
+            usrdR.setStatus(usrR.getStatus().toString());
+            usrdR.setUserId(usrR.getUserId());
+            usrdR.setActivated_on(usrR.getActivated_on());
+            usrdR.setUserExtId(usrR.getUserExtId());
+            usrdR.setUserName(usrR.getUserName());
+            usrdR.setValidUpto(usrR.getValidUpto());
+
+            return usrdR;
+        }).collect(Collectors.toList());
     }
 }

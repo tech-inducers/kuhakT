@@ -63,4 +63,8 @@ public class UserController {
         }
 
     }
+    @GetMapping("/gatalluser/provider/{providerid}")
+    public List<UserDto> getAllUserByProviderId(@PathVariable (value = "providerid") Long providerId){
+        return userService.getAllUserByProviderId(providerId);
+    }
 }

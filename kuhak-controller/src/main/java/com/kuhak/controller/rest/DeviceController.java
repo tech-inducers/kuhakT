@@ -71,4 +71,9 @@ public class DeviceController {
 					+device.getDeviceId());
 		}
 	}
+
+	@GetMapping("/getalldevice/user/{userid}")
+	public List<DeviceDto> getAllDeviceByUserId(@PathVariable (value = "userid") Long userId){
+		return deviceService.getAllDeviceByUserId(userId);
+	}
 }
