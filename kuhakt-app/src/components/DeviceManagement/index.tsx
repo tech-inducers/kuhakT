@@ -332,9 +332,9 @@ class DeviceMangementContainer extends React.Component<any, any> {
                                     rules={[{ required: true, message: 'Please choose status' }]}
                                 >
                                     <Select placeholder="Please choose the status">
-                                        <Option key="new" value="NEW">New</Option>
-                                        <Option key="active" value="ACTIVE">Active</Option>
-                                        <Option key="inactive" value="DEACTIVE">Deactive</Option>
+                                        <Option key="NEW" value="NEW">New</Option>
+                                        <Option key="ACTIVE" value="ACTIVE">Active</Option>
+                                        <Option key="DEACTIVE" value="DEACTIVE">Deactive</Option>
                                     </Select>
                                 </Form.Item>
                             </Col>

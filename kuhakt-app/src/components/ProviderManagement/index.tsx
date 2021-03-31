@@ -53,6 +53,10 @@ class ProviderManagement extends React.Component<any, any> {
                 key: 'action',
                 render: (text: any, record: any) => (
                     <Space size="middle"  >
+                        
+                        {record.status === 'NEW' ? <Button style={{ float: "right" }} type="primary" size={'small'} onClick={() => this.activateItem(record)}>
+                            Activate
+                        </Button> : null }
                         <Button type="primary" onClick={() => this.openEditDrawer(record)}  icon={<EditOutlined />} size={'small'} />
                     </Space>
                 ),
@@ -89,14 +93,32 @@ class ProviderManagement extends React.Component<any, any> {
         });
     };
 
+    activateItem = (record: any) => {
+        this.loader(true);
+
+        let requestData = {
+            ...record,
+            'providerId': this.state.selectedEditRow.providerId,
+            'status': 'ACTIVE',
+            'activated_on' : moment().toISOString()
+        }
+
+        this.providerService.updateProvider(requestData).then(({ data }: any) => {
+            toaster.openNotificationWithIcon('success', 'Success', 'Provider activated successfully');
+            this.getProviders();
+            this.loader(false);
+        }).catch((error: any) => {
+            this.loader(false);
+        });
+    };
+
     createOrUpdateProvider = (values: any) => {
         this.loader(true);
         if(this.state.editMode){
             let requestData = {
                 ...values,
                 'providerId': this.state.selectedEditRow.providerId,
-                'validUpto': values.validUpto.toISOString(),
-                'activated_on' : values.activated_on.toISOString()
+                'validUpto': values.validUpto.toISOString()
             }
     
             this.providerService.updateProvider(requestData).then(({ data }: any) => {
@@ -111,8 +133,7 @@ class ProviderManagement extends React.Component<any, any> {
             let requestData = {
                 ...values,
                 'status': 'NEW',
-                'validUpto': values.validUpto.toISOString(),
-                'activated_on' : values.activated_on.toISOString()
+                'validUpto': values.validUpto.toISOString()
             }
     
             this.providerService.createProvider(requestData).then(({ data }: any) => {
@@ -237,18 +258,19 @@ class ProviderManagement extends React.Component<any, any> {
                             </Row>
                             
                             <Row gutter={16}>                            
-                                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                                {this.state.editMode ? <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                                     <Form.Item
                                         name="activated_on"
                                         label="Activated On"
-                                        rules={[{ required: true, message: 'Please choose the date' }]}
+                                        rules={[{ required: false, message: 'Please choose the date' }]}
                                     >
                                         <DatePicker
+                                            disabled
                                             format={dateFormat}
                                             style={{ width: '100%' }}
                                         />
                                     </Form.Item>
-                                </Col>
+                                </Col> : null }
                                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                                     <Form.Item
                                         name="validUpto"
@@ -262,7 +284,7 @@ class ProviderManagement extends React.Component<any, any> {
                                     </Form.Item>
                                 </Col>
                             </Row>
-                            <Row gutter={16}>
+                            {this.state.editMode ? <Row gutter={16}>
                                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                                     <Form.Item
                                         name="status"
@@ -270,13 +292,13 @@ class ProviderManagement extends React.Component<any, any> {
                                         rules={[{ required: true, message: 'Please choose status' }]}
                                     >
                                         <Select placeholder="Please choose the status">
-                                            <Option key="new" value="new">New</Option>
-                                            <Option key="active" value="active">Active</Option>
-                                            <Option key="inactive" value="inactive">Inactive</Option>
+                                            <Option key="NEW" value="NEW">New</Option>
+                                            <Option key="ACTIVE" value="ACTIVE">Active</Option>
+                                            <Option key="DEACTIVE" value="DEACTIVE">Deactive</Option>
                                         </Select>
                                     </Form.Item>
                                 </Col>
-                            </Row>
+                            </Row> : null }
                         </Form>
                     </Spin>
                 </Drawer>          

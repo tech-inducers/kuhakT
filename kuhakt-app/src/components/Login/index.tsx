@@ -40,7 +40,7 @@ class Login extends React.Component<any, any>{
             'uId':1,
             'isAuthenticated':true
         });
-        this.history.push("/devices");
+        this.history.push("/providers");
     };
     render() {
         return (
