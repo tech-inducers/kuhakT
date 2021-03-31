@@ -1,19 +1,20 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import UserService from "../../services/UserManagementService";
-import ProviderManagementService from "../../services/ProviderManagementService";
+import ProtocolService from "../../services/ProtocolManagementService";
+import GatewayService from "../../services/GatewayManagementService";
 import { Table, Space, Spin, Row, Col, Breadcrumb, Button, Select, Drawer, Form, Input, DatePicker } from 'antd';
 import { PlusOutlined, EditOutlined } from '@ant-design/icons';
 import { FormInstance } from 'antd/lib/form';
 import Toaster from '../../utils/toaster';
+import NumericInput from '../../utils/NumberField';
 import moment from 'moment';
 
 const toaster = new Toaster();
 const { Option } = Select;
 const dateFormat = 'YYYY/MM/DD';
-class UserMangementContainer extends React.Component<any, any> {
-    private userService: any;
-    private providerService: any;
+class GatewayMangementContainer extends React.Component<any, any> {
+    private gatewayService: any;
+    private protocolService: any;
     formRef = React.createRef<FormInstance>();
     constructor(props: any) {
         super(props);
@@ -23,44 +24,45 @@ class UserMangementContainer extends React.Component<any, any> {
             selectedEditRow: null,
             editMode: false,
             data: [],
-            providerList: [],
+            protocolList: [],
             columns: [{
-                title: 'User Name',
-                dataIndex: 'userName',
-                key: 'userName',
-                render: (text: any) => text,
-            },
-            {
-                title: 'Status',
-                dataIndex: 'status',
-                key: 'status',
-            },
-            {
-                title: 'Activated On',
-                dataIndex: 'activated_on',
-                key: 'activated_on',
-            },
-            {
-                title: 'ValidUpto',
-                dataIndex: 'validUpto',
-                key: 'validUpto',
-            },
-            {
-                title: 'Action',
-                key: 'action',
-                render: (text: any, record: any) => (
-                    <Space size="middle"  >
-                        <Button type="primary" onClick={() => this.openEditDrawer(record)}  icon={<EditOutlined />} size={'small'} />
-                    </Space>
-                ),
-            }]
+                    title: 'Gateway Ip',
+                    dataIndex: 'gatewayIp',
+                    key: 'gatewayIp',
+                    render: (text: any) => text,
+                },
+                {
+                    title: 'Gateway Port',
+                    dataIndex: 'gatewayPort',
+                    key: 'gatewayPort',
+                },
+                {
+                    title: 'Status',
+                    dataIndex: 'status',
+                    key: 'status',
+                },
+                {
+                    title: 'Activated On',
+                    dataIndex: 'activated_on',
+                    key: 'activated_on',
+                },
+                // {
+                //     title: 'Action',
+                //     key: 'action',
+                //     render: (text: any, record: any) => (
+                //         <Space size="middle"  >
+                //             <Button type="primary" onClick={() => this.openEditDrawer(record)}  icon={<EditOutlined />} size={'small'} />
+                //         </Space>
+                //     ),
+                // }
+            ]
         };
-        this.userService = new UserService();
-        this.providerService = new ProviderManagementService();
+        this.gatewayService = new GatewayService();
+        this.protocolService = new ProtocolService();
     }
     componentDidMount() {
-        this.getUsers();
-        this.getProviders();
+        this.getGateway();
+        this.getProtocols();
     }
     loader = (status: boolean) => {
         this.setState({
@@ -68,13 +70,13 @@ class UserMangementContainer extends React.Component<any, any> {
         });
     };
 
-    getProviders = () => {
+    getProtocols = () => {
         this.loader(true);
 
-        this.providerService.fetchProviders().then(({ data }: any) => {
+        this.protocolService.fetchProtocol().then(({ data }: any) => {
             this.setState({
                 ...this.state,
-                providerList: data
+                protocolList: data
             });
             this.loader(false);
         }).catch((error: any) => {
@@ -82,16 +84,16 @@ class UserMangementContainer extends React.Component<any, any> {
         });
     };
 
-    getUsers = () => {
+    getGateway = () => {
         this.loader(true);
 
-        this.userService.fetchUsers().then(({ data }: any) => {
+        this.gatewayService.fetchGateway().then(({ data }: any) => {
             this.setState({
                 ...this.state,
                 data: data.map((item: any, i: number) => {
                     return {
                         ...item,
-                        'key' : 'user'+i
+                        'key' : 'gateway'+i
                     }
                 })
             });
@@ -101,35 +103,33 @@ class UserMangementContainer extends React.Component<any, any> {
         });
     };
 
-    createOrUpdateProvider = (values: any) => {
+    createOrUpdateGateway = (values: any) => {
         this.loader(true);
         if(this.state.editMode){
-            let requestData = {
-                ...values,
-                'userId': this.state.selectedEditRow.userId,
-                'validUpto': values.validUpto.toISOString(),
-                'activated_on' : values.activated_on.toISOString()
-            }
+            // let requestData = {
+            //     ...values,
+            //     'gatewayId': this.state.selectedEditRow.gatewayId,
+            //     'activated_on' : values.activated_on.toISOString()
+            // }
     
-            this.userService.updateUser(requestData).then(({ data }: any) => {
-                toaster.openNotificationWithIcon('success', 'Success', 'User updated successfully');
-                this.getUsers();
-                this.onClose();
-            }).catch((error: any) => {
-                this.loader(false);
-                this.onClose();
-            });
+            // this.gatewayService.updateGateway(requestData).then(({ data }: any) => {
+            //     toaster.openNotificationWithIcon('success', 'Success', 'Gateway updated successfully');
+            //     this.getGateway();
+            //     this.onClose();
+            // }).catch((error: any) => {
+            //     this.loader(false);
+            //     this.onClose();
+            // });
         } else {
             let requestData = {
                 ...values,
                 'status': 'NEW',
-                'validUpto': values.validUpto.toISOString(),
                 'activated_on' : values.activated_on.toISOString()
             }
     
-            this.userService.createUser(requestData).then(({ data }: any) => {
-                toaster.openNotificationWithIcon('success', 'Success', 'User created successfully');
-                this.getUsers();
+            this.gatewayService.createGateway(requestData).then(({ data }: any) => {
+                toaster.openNotificationWithIcon('success', 'Success', 'Gateway created successfully');
+                this.getGateway();
                 this.onClose();
             }).catch((error: any) => {
                 this.loader(false);
@@ -170,6 +170,7 @@ class UserMangementContainer extends React.Component<any, any> {
         this.formRef.current!.resetFields();
     };
 
+
     render() {
         const {data, columns} = this.state;
         return (
@@ -180,19 +181,19 @@ class UserMangementContainer extends React.Component<any, any> {
                         <Breadcrumb>
                             <Breadcrumb.Item><Link to="/">Home </Link></Breadcrumb.Item>
                             <Breadcrumb.Item>CDM</Breadcrumb.Item>
-                            <Breadcrumb.Item>Users</Breadcrumb.Item>
+                            <Breadcrumb.Item>Gateway</Breadcrumb.Item>
                         </Breadcrumb>
                     </Col>
                     <Col className="gutter-row" xs={24} sm={24} md={12} lg={12} xl={12}>
                         <Button style={{ float: "right" }} type="primary" icon={<PlusOutlined />} size={'small'} onClick={this.showAddDrawer}>
-                            Add User
+                            Add Gateway
                         </Button>
                     </Col>
                 </Row>
                 <Table columns={columns} dataSource={data} />
             </Spin>
             <Drawer
-                title={this.state.editMode ? "Edit User" :"Create a User"}
+                title={this.state.editMode ? "Edit Gateway" :"Create a Gateway"}
                 width={window.innerWidth > 900 ? 720 : window.innerWidth - 100}
                 onClose={this.onClose}
                 visible={this.state.visible}
@@ -207,7 +208,7 @@ class UserMangementContainer extends React.Component<any, any> {
                             <Button onClick={this.onClose} style={{ marginRight: 8 }}>
                                 Cancel
                             </Button>
-                            <Button form="userAddEdit" key="submit" htmlType="submit" type="primary">
+                            <Button form="gatewayAddEdit" key="submit" htmlType="submit" type="primary">
                                 {this.state.editMode ?'Save' : 'Submit'}
                             </Button>
                         </div>
@@ -219,30 +220,75 @@ class UserMangementContainer extends React.Component<any, any> {
                         ref={this.formRef} 
                         initialValues={this.state.selectedEditRow} 
                         layout="vertical" 
-                        id="userAddEdit" 
-                        onFinish={this.createOrUpdateProvider}
+                        id="gatewayAddEdit" 
+                        onFinish={this.createOrUpdateGateway}
                     >
                         <Row gutter={16}>
                             <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                                 <Form.Item
-                                    name="userName"
-                                    label="UserName"
-                                    rules={[{ required: true, message: 'Please enter username' }]}
+                                    name="gatewayIp"
+                                    label="Gateway Ip"
+                                    rules={[{ required: true, message: 'Please enter Gateway Ip' }]}
                                 >
-                                    <Input placeholder="Please enter username" />
+                                    <Input placeholder="Please enter Gateway Ip" />
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                                 <Form.Item
-                                    name="userExtId"
-                                    label="User external Id"
-                                    rules={[{ required: true, message: 'Please enter user external Id' }]}
+                                    name="gatewayPort"
+                                    label="Gateway Port"
+                                    rules={[{ required: true, message: 'Please enter Gateway Port' }]}
                                 >
                                     <Input
                                         style={{ width: '100%' }}
-                                        // addonBefore="http://"
-                                        // addonAfter=".com"
-                                        placeholder="Please enter user external Id"
+                                        placeholder="Please enter Gateway Port"
+                                    />
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                        <Row gutter={16}>
+                            <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                                <Form.Item
+                                    name="gatewaySuffix"
+                                    label="Gateway Suffix"
+                                    rules={[{ required: true, message: 'Please enter Gateway Suffix' }]}
+                                >
+                                    <Input placeholder="Please enter Gateway Suffix" />
+                                </Form.Item>
+                            </Col>
+                            <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                                <Form.Item
+                                    name="gatwwayPrefix"
+                                    label="Gateway Prefix"
+                                    rules={[{ required: true, message: 'Please enter Gateway Prefix' }]}
+                                >
+                                    <Input
+                                        style={{ width: '100%' }}
+                                        placeholder="Please enter Gateway Prefix"
+                                    />
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                        <Row gutter={16}>
+                            <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                                <Form.Item
+                                    name="deviceCount"
+                                    label="Device Count"
+                                    rules={[{ required: true, message: 'Please enter Device Count' }]}
+                                >
+                                    <NumericInput placeholder="Please enter Device Count" maxLength="3" />
+                                </Form.Item>
+                            </Col>
+                            <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                                <Form.Item
+                                    name="deviceLimit"
+                                    label="Device Limit"
+                                    rules={[{ required: true, message: 'Please enter Device Limit' }]}
+                                >
+                                    <NumericInput
+                                        style={{ width: '100%' }}
+                                        placeholder="Please enter Device Limit"
+                                        maxLength="3"
                                     />
                                 </Form.Item>
                             </Col>
@@ -262,7 +308,7 @@ class UserMangementContainer extends React.Component<any, any> {
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                <Form.Item
+                                {/* <Form.Item
                                     name="validUpto"
                                     label="Valid Upto"
                                     rules={[{ required: true, message: 'Please choose the date' }]}
@@ -271,7 +317,7 @@ class UserMangementContainer extends React.Component<any, any> {
                                         format={dateFormat}
                                         style={{ width: '100%' }}
                                     />
-                                </Form.Item>
+                                </Form.Item> */}
                             </Col>
                         </Row>
                         <Row gutter={16}>
@@ -290,13 +336,13 @@ class UserMangementContainer extends React.Component<any, any> {
                             </Col>
                             <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                                 <Form.Item
-                                    name="providerId"
-                                    label="Provider"
-                                    rules={[{ required: true, message: 'Please choose provider' }]}
+                                    name="protocolId"
+                                    label="Protocol"
+                                    rules={[{ required: true, message: 'Please choose Protocol' }]}
                                 >
-                                    <Select placeholder="Please choose provider">
-                                        {this.state.providerList.map((item: any, i: number) => {
-                                            return <Option key={i+'provi'} value={item.providerId}>{item.providerName}</Option>
+                                    <Select placeholder="Please choose Protocol">
+                                        {this.state.protocolList.map((item: any, i: number) => {
+                                            return <Option key={i+'provi'} value={item.protocolId}>{item.protocolName}</Option>
                                         })}
                                     </Select>
                                 </Form.Item>
@@ -310,4 +356,4 @@ class UserMangementContainer extends React.Component<any, any> {
     }
 }
 
-export default UserMangementContainer;
+export default GatewayMangementContainer;

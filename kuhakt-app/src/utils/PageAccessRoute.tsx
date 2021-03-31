@@ -22,7 +22,7 @@ const PageAccessRoute = ({
     ...otherProps
 }: IProps) => {
     const checkAuthorities = (props: any) =>{
-        console.log('props', props)
+        // console.log('props', props)
         return true ? (
             <Component {...props} />
         ) : (

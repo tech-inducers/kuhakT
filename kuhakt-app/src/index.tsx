@@ -23,13 +23,13 @@ export const store = createStore(
   rootReducer, composeEnhancers(applyMiddleware(redux_thunk))
 );
 ReactDOM.render(
-  <React.StrictMode>
+  <>
     <Provider store={store}>
       <Router history={history}>
         <App />
       </Router>
     </Provider>
-  </React.StrictMode>,
+  </>,
   document.getElementById('root')
 );
 
