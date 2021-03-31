@@ -9,6 +9,7 @@ import UserManagement from "./components/UserManagement";
 import ProviderManagement from "./components/ProviderManagement";
 import ProtocolManagement from "./components/ProtocolManagement";
 import GatewayMangement from "./components/GatewayManagement";
+import DeviceMangement from "./components/DeviceManagement";
 import PageAccessRoute from './utils/PageAccessRoute';
 import { logout } from './store/actions/aclManagementActions';
 const { SubMenu } = Menu;
@@ -64,7 +65,7 @@ class App extends React.Component<any, any>{
                                 <SubMenu key="sub1" icon={<SettingOutlined />} title="CDM">
                                     <Menu.Item key="sub111"><Link to="providers" >Providers</Link></Menu.Item>
                                     <Menu.Item key="sub112"><Link to="users" >Users</Link></Menu.Item>
-                                    <Menu.Item key="sub113">Devices</Menu.Item>
+                                    <Menu.Item key="sub113"><Link to="devices" >Devices</Link></Menu.Item>
                                 </SubMenu>
                                 <SubMenu key="sub2" icon={<SettingOutlined />} title="Gateway & Proxy">
                                     <Menu.Item key="sub221"><Link to="protocol" >Protocol</Link></Menu.Item>
@@ -83,6 +84,7 @@ class App extends React.Component<any, any>{
                                     <PageAccessRoute path="/providers" component={ProviderManagement} />
                                     <PageAccessRoute path="/protocol" component={ProtocolManagement} />
                                     <PageAccessRoute path="/gateway" component={GatewayMangement} />
+                                    <PageAccessRoute path="/devices" component={DeviceMangement} />
                                     <Route path='/not-found' component={NotFound} />
                                     {/* <Route render={(props) => {
                                         let vaildUrl = ['/','/upload-pipe-json','/upload-pipe-compress','/dashboard', '/userManagement', '/roleManagement', '/permissionManagement', '/partners', '/pipe', '/add-pipe', '/edit-pipe', '/upload-pipe'];

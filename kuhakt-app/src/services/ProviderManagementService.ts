@@ -17,7 +17,7 @@ export default class ProviderManagementService {
   }
 
   public updateProvider = (requestData: any) => {
-    return this.axiosInstance.post(this.providerManagmentBaseUrl + '/status-change', requestData);
+    return this.axiosInstance.post(this.providerManagmentBaseUrl + '/update', requestData);
   }
 
 
