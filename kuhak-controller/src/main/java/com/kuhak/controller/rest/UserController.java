@@ -71,32 +71,28 @@ public class UserController {
 
     @PostMapping("/activate")
     public ResponseEntity<?> activate(@Valid @RequestBody UserDto userDto){
-        if(userDto.getStatus().equals("ACTIVE")){
-            userDto.setActivated_on(LocalDateTime.now());
+        UserDto userToActivated = userMapper.mapUserToUserDto(userService.getUserById(userDto.getUserId()));
+        userToActivated.setStatus("ACTIVE");
+            userToActivated.setActivated_on(LocalDateTime.now());
         try{
             return new ResponseEntity<UserDto>(userMapper.mapUserToUserDto(userService
-                    .updateUser(userMapper.mapUserDtoToUser(userDto))), HttpStatus.OK);
+                    .updateUser(userMapper.mapUserDtoToUser(userToActivated))), HttpStatus.OK);
         }catch (Exception ex){
             throw new ResourceNotFoundException("User not found with id ===>"+userDto.getUserId());
-        }}else{
-            throw new ResourceNotFoundException("Invalid activation request for user id -->"
-                    +userDto.getUserId());
-        }
 
-    }
+
+    }}
 
     @PostMapping("/deactivate")
     public ResponseEntity<?> deactivate(@Valid @RequestBody UserDto userDto){
-        if(userDto.getStatus().equals("DEACTIVE")){
-            userDto.setValidUpto(LocalDateTime.now());
+        UserDto userToDeActivated = userMapper.mapUserToUserDto(userService.getUserById(userDto.getUserId()));
+        userToDeActivated.setStatus("DEACTIVE");
+        userToDeActivated.setValidUpto(LocalDateTime.now());
         try{
             return new ResponseEntity<UserDto>(userMapper.mapUserToUserDto(userService
-                    .updateUser(userMapper.mapUserDtoToUser(userDto))), HttpStatus.OK);
+                    .updateUser(userMapper.mapUserDtoToUser(userToDeActivated))), HttpStatus.OK);
         }catch (Exception ex){
             throw new ResourceNotFoundException("User not found with id ===>"+userDto.getUserId());
-        }}else{
-            throw new ResourceNotFoundException("Invalid deactivation request for user id -->"
-                    +userDto.getUserId());
         }
 
     }

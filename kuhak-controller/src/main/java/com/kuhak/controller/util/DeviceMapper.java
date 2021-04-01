@@ -45,6 +45,8 @@ public class DeviceMapper {
 		deviceDto.setActivated_on(device.getActivated_on());
 		deviceDto.setValidUpto(device.getValidUpto());
 		deviceDto.setUserId(device.getUser().getUserId());
+		deviceDto.setDeviceType(device.getDeviceType().toString());
+		deviceDto.setProtocolId(device.getProtocol().getProtocolId());
 
 		return deviceDto;
 	}

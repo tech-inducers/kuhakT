@@ -70,33 +70,29 @@ public class ProvicerController {
 
 	@PostMapping("/activate")
 	public ResponseEntity<?> activate(@Valid @RequestBody ProviderDto provider) {
-		if(provider.getStatus().equals("ACTIVE") ) {
-			provider.setActivated_on(LocalDateTime.now());
+		ProviderDto providerToActivated = providerMapper.mapProviderToProviderDto(providerService.getProvider(provider.getProviderId()));
+		providerToActivated.setStatus("ACTIVE");
+		provider.setActivated_on(LocalDateTime.now());
 			try {
-				return new ResponseEntity<ProviderDto>(providerService.update(provider), HttpStatus.OK);
+				return new ResponseEntity<ProviderDto>(providerService.update(providerToActivated), HttpStatus.OK);
 			} catch (Exception Ex) {
 				throw new ResourceNotFoundException("Error while activating provider with ID ===>"
 						+ provider.getProviderId());
 			}
-		}else {
-			throw new ResourceNotFoundException("Invalid activation request for provider id -->"
-					+provider.getProviderId());
-		}
+
 	}
 
 	@PostMapping("/deactivate")
 	public ResponseEntity<?> deactivate(@Valid @RequestBody ProviderDto provider) {
-		if(provider.getStatus().equals("DEACTIVE") ) {
-			provider.setValidUpto(LocalDateTime.now());
+		ProviderDto providerToDeActivated = providerMapper.mapProviderToProviderDto(providerService.getProvider(provider.getProviderId()));
+		providerToDeActivated.setStatus("DEACTIVE");
+		provider.setValidUpto(LocalDateTime.now());
 			try {
-				return new ResponseEntity<ProviderDto>(providerService.update(provider), HttpStatus.OK);
+				return new ResponseEntity<ProviderDto>(providerService.update(providerToDeActivated), HttpStatus.OK);
 			} catch (Exception Ex) {
 				throw new ResourceNotFoundException("Error while activating provider with ID ===>"
 						+ provider.getProviderId());
 			}
-		}else {
-			throw new ResourceNotFoundException("Invalid activation request for provider id -->"
-					+provider.getProviderId());
-		}
+
 	}
 }

@@ -76,35 +76,32 @@ public class DeviceController {
 
 	@PostMapping("/activate")
 	public ResponseEntity<?> activate(@Valid @RequestBody DeviceDto device) {
-
-		if(device.getStatus().equals("ACTIVE") ) {
-			device.setActivated_on(LocalDateTime.now());
+		DeviceDto deviceToActivated = deviceMapper.mapDeviceToDeviceDto(deviceService.getDeviceById(device.getDeviceId()));
+		deviceToActivated.setStatus("ACTIVE"); ;
+		deviceToActivated.setActivated_on(LocalDateTime.now());
 			try {
-				return new ResponseEntity<DeviceDto>(deviceService.update(device), HttpStatus.OK);
+				return new ResponseEntity<DeviceDto>(deviceService.update(deviceToActivated), HttpStatus.OK);
 			} catch (Exception Ex) {
+				Ex.printStackTrace();
 				throw new ResourceNotFoundException("Error while activating Device with ID ===>"
 						+ device.getDeviceId());
 			}
-		}else {
-			throw new ResourceNotFoundException("Invalid activation request for device with ID ==>"
-			+device.getDeviceId());
-		}
+
 	}
 
 	@PostMapping("/dactivate")
 	public ResponseEntity<?> dactivate(@Valid @RequestBody DeviceDto device) {
-
-		if(device.getStatus().equals("DEACTIVE")) {
-			device.setValidUpto(LocalDateTime.now());
+		DeviceDto deviceToDeActivated = deviceMapper.mapDeviceToDeviceDto(deviceService.getDeviceById(device.getDeviceId()));
+		deviceToDeActivated.setStatus("DEACTIVE");
+		deviceToDeActivated.setValidUpto(LocalDateTime.now());
 			try {
-				return new ResponseEntity<DeviceDto>(deviceService.update(device), HttpStatus.OK);
+				return new ResponseEntity<DeviceDto>(deviceService.update(deviceToDeActivated), HttpStatus.OK);
 			} catch (Exception Ex) {
+				Ex.printStackTrace();
 				throw new ResourceNotFoundException("Error while deactivating Device with ID ===>"
 						+ device.getDeviceId());
 			}
-		}else {
-			throw new ResourceNotFoundException("Invalid deactivation request for device id -->"+device.getDeviceId());
-		}
+
 	}
 
 	@GetMapping("/getalldevice/user/{userid}")

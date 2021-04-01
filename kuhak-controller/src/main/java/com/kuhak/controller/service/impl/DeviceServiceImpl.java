@@ -66,11 +66,17 @@ public class DeviceServiceImpl implements DeviceService {
 
 		/*Device updatedDevice = deviceRepo.saveAndFlush(deviceMapper.mapDeviceDtoToDevice(device));
 		return deviceMapper.mapDeviceToDeviceDto(updatedDevice);*/
-		if(deviceRepo.existsById(device.getUserId())){
+		Optional<Device> deviceO = deviceRepo.findById(device.getDeviceId());
+		if(!deviceO.isPresent()){
+			System.out.println(deviceO.isPresent());
 			throw new ResourceNotFoundException("Device not found with id:"
 					+device.getDeviceId()+" ext id:"+device.getDeviceExtId());
 		}
-		Device updatedDevice = deviceRepo.saveAndFlush(deviceMapper.mapDeviceDtoToDevice(device));
+		Optional<Device> deviceEntity = deviceRepo.findById(device.getDeviceId());
+		Gateway gatewayForDevice = deviceEntity.get().getGateway();
+		Device deviceToUpdate = deviceMapper.mapDeviceDtoToDevice(device);
+		deviceToUpdate.setGateway(gatewayForDevice);
+		Device updatedDevice = deviceRepo.saveAndFlush(deviceToUpdate);
 		return deviceMapper.mapDeviceToDeviceDto(updatedDevice);
 	}
 
