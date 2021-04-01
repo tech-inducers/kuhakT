@@ -59,6 +59,9 @@ class DeviceMangementContainer extends React.Component<any, any> {
                 key: 'action',
                 render: (text: any, record: any) => (
                     <Space size="middle"  >
+                        {!(record.status === 'ACTIVE') ? <Button style={{ float: "right" }} type="primary" size={'small'} onClick={() => this.changeStatus(record, 'ACTIVE')}>
+                            Activate
+                        </Button> : null }
                         <Button type="primary" onClick={() => this.openEditDrawer(record)}  icon={<EditOutlined />} size={'small'} />
                     </Space>
                 ),
@@ -126,14 +129,35 @@ class DeviceMangementContainer extends React.Component<any, any> {
         });
     };
 
+    changeStatus = (record: any, status: string) => {
+        this.loader(true);
+
+        let requestData: any = {
+            ...record,
+            'deviceId': record.deviceId,
+            'status': status
+        }
+
+        if(status === 'ACTIVE'){
+            requestData['activated_on'] = moment().toISOString()
+        }
+
+        this.deviceService.updateDevice(requestData).then(({ data }: any) => {
+            toaster.openNotificationWithIcon('success', 'Success', 'Device status updated to '+status);
+            this.getUsers();
+            this.loader(false);
+        }).catch((error: any) => {
+            this.loader(false);
+        });
+    };
+
     createOrUpdateProvider = (values: any) => {
         this.loader(true);
         if(this.state.editMode){
             let requestData = {
                 ...values,
                 'deviceId': this.state.selectedEditRow.deviceId,
-                'validUpto': values.validUpto.toISOString(),
-                'activated_on' : values.activated_on.toISOString()
+                'validUpto': values.validUpto.toISOString()
             }
     
             this.deviceService.updateDevice(requestData).then(({ data }: any) => {
@@ -148,8 +172,7 @@ class DeviceMangementContainer extends React.Component<any, any> {
             let requestData = {
                 ...values,
                 'status': 'NEW',
-                'validUpto': values.validUpto.toISOString(),
-                'activated_on' : values.activated_on.toISOString()
+                'validUpto': values.validUpto.toISOString()
             }
     
             this.deviceService.createDevice(requestData).then(({ data }: any) => {
@@ -299,18 +322,19 @@ class DeviceMangementContainer extends React.Component<any, any> {
                         </Row>
                         
                         <Row gutter={16}>                            
-                            <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                            {this.state.editMode ? <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                                 <Form.Item
                                     name="activated_on"
                                     label="Activated On"
                                     rules={[{ required: true, message: 'Please choose the date' }]}
                                 >
                                     <DatePicker
+                                        disabled
                                         format={dateFormat}
                                         style={{ width: '100%' }}
                                     />
                                 </Form.Item>
-                            </Col>
+                            </Col> : null }
                             <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                                 <Form.Item
                                     name="validUpto"
@@ -323,9 +347,9 @@ class DeviceMangementContainer extends React.Component<any, any> {
                                     />
                                 </Form.Item>
                             </Col>
-                        </Row>
-                        <Row gutter={16}>
-                            <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                        {/* </Row>
+                        <Row gutter={16}> */}
+                            {this.state.editMode ? <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                                 <Form.Item
                                     name="status"
                                     label="Status"
@@ -337,7 +361,7 @@ class DeviceMangementContainer extends React.Component<any, any> {
                                         <Option key="DEACTIVE" value="DEACTIVE">Deactive</Option>
                                     </Select>
                                 </Form.Item>
-                            </Col>
+                            </Col> : null }
                             <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                                 <Form.Item
                                     name="protocolId"

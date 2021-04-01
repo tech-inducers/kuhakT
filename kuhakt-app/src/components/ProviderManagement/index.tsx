@@ -54,7 +54,7 @@ class ProviderManagement extends React.Component<any, any> {
                 render: (text: any, record: any) => (
                     <Space size="middle"  >
                         
-                        {record.status === 'NEW' ? <Button style={{ float: "right" }} type="primary" size={'small'} onClick={() => this.activateItem(record)}>
+                        {record.status === 'NEW' ? <Button style={{ float: "right" }} type="primary" size={'small'} onClick={() => this.changeStatus(record, 'ACTIVE')}>
                             Activate
                         </Button> : null }
                         <Button type="primary" onClick={() => this.openEditDrawer(record)}  icon={<EditOutlined />} size={'small'} />
@@ -93,18 +93,20 @@ class ProviderManagement extends React.Component<any, any> {
         });
     };
 
-    activateItem = (record: any) => {
+    changeStatus = (record: any, status: string) => {
         this.loader(true);
-
-        let requestData = {
+        let requestData: any = {
             ...record,
-            'providerId': this.state.selectedEditRow.providerId,
-            'status': 'ACTIVE',
-            'activated_on' : moment().toISOString()
+            'providerId': record.providerId,
+            'status': status
+        }
+
+        if(status === 'ACTIVE'){
+            requestData['activated_on'] = moment().toISOString()
         }
 
         this.providerService.updateProvider(requestData).then(({ data }: any) => {
-            toaster.openNotificationWithIcon('success', 'Success', 'Provider activated successfully');
+            toaster.openNotificationWithIcon('success', 'Success', 'Provider status updated to '+status);
             this.getProviders();
             this.loader(false);
         }).catch((error: any) => {
@@ -292,8 +294,8 @@ class ProviderManagement extends React.Component<any, any> {
                                         rules={[{ required: true, message: 'Please choose status' }]}
                                     >
                                         <Select placeholder="Please choose the status">
-                                            <Option key="NEW" value="NEW">New</Option>
-                                            <Option key="ACTIVE" value="ACTIVE">Active</Option>
+                                            {/* <Option key="NEW" value="NEW">New</Option> */}
+                                            {/* <Option key="ACTIVE" value="ACTIVE">Active</Option> */}
                                             <Option key="DEACTIVE" value="DEACTIVE">Deactive</Option>
                                         </Select>
                                     </Form.Item>
