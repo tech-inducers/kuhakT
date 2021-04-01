@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import UserService from "../../services/UserManagementService";
 import ProviderManagementService from "../../services/ProviderManagementService";
 import { Table, Space, Spin, Row, Col, Breadcrumb, Button, Select, Drawer, Form, Input, DatePicker } from 'antd';
@@ -54,6 +54,9 @@ class UserMangementContainer extends React.Component<any, any> {
                             Activate
                         </Button> : null }
                         <Button type="primary" onClick={() => this.openEditDrawer(record)}  icon={<EditOutlined />} size={'small'} />
+                        <NavLink to={`/user/${record.userId}/devices`}><Button style={{ float: "right" }} type="primary" size={'small'} >
+                            View Assigned Device
+                        </Button></NavLink>
                     </Space>
                 ),
             }]
@@ -201,7 +204,7 @@ class UserMangementContainer extends React.Component<any, any> {
                 <Row gutter={[16, 24]} style={{ marginBottom: 20 }}>
                     <Col className="gutter-row" xs={24} sm={24} md={12} lg={12} xl={12} >
                         <Breadcrumb>
-                            <Breadcrumb.Item><Link to="/">Home </Link></Breadcrumb.Item>
+                            <Breadcrumb.Item><NavLink to="/">Home </NavLink></Breadcrumb.Item>
                             <Breadcrumb.Item>CDM</Breadcrumb.Item>
                             <Breadcrumb.Item>Users</Breadcrumb.Item>
                         </Breadcrumb>

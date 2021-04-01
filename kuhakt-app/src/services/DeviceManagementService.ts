@@ -12,6 +12,10 @@ export default class DeviceService {
     return this.axiosInstance.get(this.deviceManagmentBaseUrl);
   }
 
+  public fetchUserWiseDevices = (userid: number) => {
+    return this.axiosInstance.get(this.deviceManagmentBaseUrl+`/getalldevice/user/${userid}`);
+  }
+
   public createDevice = (requestData: any) => {
     // console.log("Create user",requestData);
     return this.axiosInstance.post(this.deviceManagmentBaseUrl, requestData);

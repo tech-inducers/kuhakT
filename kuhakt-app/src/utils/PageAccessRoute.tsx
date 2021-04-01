@@ -1,6 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { Route, Redirect, Link } from "react-router-dom";
+import { Route, Redirect, NavLink } from "react-router-dom";
 // import { Route, , RouteProps } from 'react-router-dom';
 import { Result, Button } from 'antd';
 
@@ -30,7 +30,7 @@ const PageAccessRoute = ({
                 status="403"
                 title="403"
                 subTitle="Sorry, you are not authorized to access this page."
-                extra={<Link to="/"><Button type="primary">Back Home</Button></Link>}
+                extra={<NavLink to="/"><Button type="primary">Back Home</Button></NavLink>}
             />
         );
     }

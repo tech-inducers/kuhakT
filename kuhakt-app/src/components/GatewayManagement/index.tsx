@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import ProtocolService from "../../services/ProtocolManagementService";
 import GatewayService from "../../services/GatewayManagementService";
 import { Table, Spin, Row, Col, Breadcrumb, Button, Select, Drawer, Form, Input, DatePicker } from 'antd'; // Space
@@ -179,7 +179,7 @@ class GatewayMangementContainer extends React.Component<any, any> {
                 <Row gutter={[16, 24]} style={{ marginBottom: 20 }}>
                     <Col className="gutter-row" xs={24} sm={24} md={12} lg={12} xl={12} >
                         <Breadcrumb>
-                            <Breadcrumb.Item><Link to="/">Home </Link></Breadcrumb.Item>
+                            <Breadcrumb.Item><NavLink to="/">Home </NavLink></Breadcrumb.Item>
                             <Breadcrumb.Item>CDM</Breadcrumb.Item>
                             <Breadcrumb.Item>Gateway</Breadcrumb.Item>
                         </Breadcrumb>

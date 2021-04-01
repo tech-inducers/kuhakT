@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from "react-redux";
-import { Switch, Route, Link} from "react-router-dom";
+import { Switch, Route, NavLink} from "react-router-dom";
 import './App.css';
 import { Layout, Menu, Result, Button} from 'antd';
 import { LogoutOutlined, SettingOutlined  } from '@ant-design/icons'; // UserOutlined, CloudServerOutlined , DeliveredProcedureOutlined  
@@ -20,7 +20,7 @@ const NotFound = () => <div className="appcontent"><div className="row "><div cl
         status="404"
         title="404"
         subTitle="Sorry, the page you visited does not exist."
-        extra={<Link to="/"><Button type="primary">Back Home</Button></Link>}
+        extra={<NavLink to="//"><Button type="primary">Back Home</Button></NavLink>}
     />
 </div></div></div>
 
@@ -63,13 +63,13 @@ class App extends React.Component<any, any>{
                                 style={{ height: '100%', borderRight: 1 }}
                             >
                                 <SubMenu key="sub1" icon={<SettingOutlined />} title="CDM">
-                                    <Menu.Item key="sub111"><Link to="providers" >Providers</Link></Menu.Item>
-                                    <Menu.Item key="sub112"><Link to="users" >Users</Link></Menu.Item>
-                                    <Menu.Item key="sub113"><Link to="devices" >Devices</Link></Menu.Item>
+                                    <Menu.Item key="sub111"><NavLink to="/providers" >Providers</NavLink></Menu.Item>
+                                    <Menu.Item key="sub112"><NavLink to="/users" >Users</NavLink></Menu.Item>
+                                    <Menu.Item key="sub113"><NavLink to="/devices" >Devices</NavLink></Menu.Item>
                                 </SubMenu>
                                 <SubMenu key="sub2" icon={<SettingOutlined />} title="Gateway & Proxy">
-                                    <Menu.Item key="sub221"><Link to="protocol" >Protocol</Link></Menu.Item>
-                                    <Menu.Item key="sub222"><Link to="gateway" >Gateway</Link></Menu.Item>
+                                    <Menu.Item key="sub221"><NavLink to="/protocol" >Protocol</NavLink></Menu.Item>
+                                    <Menu.Item key="sub222"><NavLink to="/gateway" >Gateway</NavLink></Menu.Item>
                                 </SubMenu>
                                 <Menu.Item key="sub3" icon={<LogoutOutlined />} onClick={this.onLogOut}>
                                     Logout
@@ -85,6 +85,7 @@ class App extends React.Component<any, any>{
                                     <PageAccessRoute path="/protocol" component={ProtocolManagement} />
                                     <PageAccessRoute path="/gateway" component={GatewayMangement} />
                                     <PageAccessRoute path="/devices" component={DeviceMangement} />
+                                    <PageAccessRoute path="/user/:userid/devices" component={DeviceMangement} />
                                     <Route path='/not-found' component={NotFound} />
                                     {/* <Route render={(props) => {
                                         let vaildUrl = ['/','/upload-pipe-json','/upload-pipe-compress','/dashboard', '/userManagement', '/roleManagement', '/permissionManagement', '/partners', '/pipe', '/add-pipe', '/edit-pipe', '/upload-pipe'];

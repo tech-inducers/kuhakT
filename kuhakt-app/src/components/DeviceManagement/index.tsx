@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import DeviceService from "../../services/DeviceManagementService";
 import ProtocolService from "../../services/ProtocolManagementService";
 import UserService from "../../services/UserManagementService";
@@ -7,6 +7,7 @@ import { Table, Space, Spin, Row, Col, Breadcrumb, Button, Select, Drawer, Form,
 import { PlusOutlined, EditOutlined } from '@ant-design/icons';
 import { FormInstance } from 'antd/lib/form';
 import Toaster from '../../utils/toaster';
+import CustomIconFont from '../../utils/customIcon';
 import moment from 'moment';
 
 const toaster = new Toaster();
@@ -16,6 +17,7 @@ class DeviceMangementContainer extends React.Component<any, any> {
     private deviceService: any;
     private protocolService: any;
     private userService: any;
+    private userId: number;
     formRef = React.createRef<FormInstance>();
     constructor(props: any) {
         super(props);
@@ -63,6 +65,7 @@ class DeviceMangementContainer extends React.Component<any, any> {
                             Activate
                         </Button> : null }
                         <Button type="primary" onClick={() => this.openEditDrawer(record)}  icon={<EditOutlined />} size={'small'} />
+                        <Button type="text" icon={<CustomIconFont type="icon-map" style={{color: "#75c82b", fontSize: '20px'}}/>} size={'small'} />
                     </Space>
                 ),
             }]
@@ -70,11 +73,13 @@ class DeviceMangementContainer extends React.Component<any, any> {
         this.deviceService = new DeviceService();
         this.userService = new UserService();
         this.protocolService = new ProtocolService();
+        this.userId = this.props.match.params.userid ? Number(this.props.match.params.userid) : 0;
     }
     componentDidMount() {
         this.getDevices();
         this.getUsers();
         this.getProtocols();
+        console.log(this.userId)        
     }
     loader = (status: boolean) => {
         this.setState({
@@ -90,6 +95,7 @@ class DeviceMangementContainer extends React.Component<any, any> {
                 ...this.state,
                 userList: data
             });
+            
             this.loader(false);
         }).catch((error: any) => {
             this.loader(false);
@@ -112,8 +118,8 @@ class DeviceMangementContainer extends React.Component<any, any> {
 
     getDevices = () => {
         this.loader(true);
-
-        this.deviceService.fetchDevices().then(({ data }: any) => {
+        let allDevicesApi =  this.userId ? this.deviceService.fetchUserWiseDevices(this.userId) : this.deviceService.fetchDevices()
+        allDevicesApi.then(({ data }: any) => {
             this.setState({
                 ...this.state,
                 data: data.map((item: any, i: number) => {
@@ -143,8 +149,8 @@ class DeviceMangementContainer extends React.Component<any, any> {
         }
 
         this.deviceService.updateDevice(requestData).then(({ data }: any) => {
-            toaster.openNotificationWithIcon('success', 'Success', 'Device status updated to '+status);
-            this.getUsers();
+            toaster.openNotificationWithIcon('success', 'Success', 'Device status updated to ' + status);
+            this.getDevices();
             this.loader(false);
         }).catch((error: any) => {
             this.loader(false);
@@ -203,7 +209,7 @@ class DeviceMangementContainer extends React.Component<any, any> {
 
     showAddDrawer = () => {
         this.setState({
-            selectedEditRow: null,
+            selectedEditRow: this.userId ? { 'userId' : this.userId }: null,
             visible: true,
             editMode: false
         },() => {
@@ -226,9 +232,13 @@ class DeviceMangementContainer extends React.Component<any, any> {
                 <Row gutter={[16, 24]} style={{ marginBottom: 20 }}>
                     <Col className="gutter-row" xs={24} sm={24} md={12} lg={12} xl={12} >
                         <Breadcrumb>
-                            <Breadcrumb.Item><Link to="/">Home </Link></Breadcrumb.Item>
+                            <Breadcrumb.Item><NavLink to="/">Home </NavLink></Breadcrumb.Item>
                             <Breadcrumb.Item>CDM</Breadcrumb.Item>
-                            <Breadcrumb.Item>Device</Breadcrumb.Item>
+                            {this.userId ? <>
+                            <Breadcrumb.Item><NavLink to="/users">User</NavLink></Breadcrumb.Item>
+                            <Breadcrumb.Item>{this.userId}</Breadcrumb.Item>
+                            </>: null }                            
+                            <Breadcrumb.Item>Devices</Breadcrumb.Item>
                         </Breadcrumb>
                     </Col>
                     <Col className="gutter-row" xs={24} sm={24} md={12} lg={12} xl={12}>
@@ -312,7 +322,7 @@ class DeviceMangementContainer extends React.Component<any, any> {
                                     label="User"
                                     rules={[{ required: true, message: 'Please select user' }]}
                                 >
-                                    <Select placeholder="Please select user">
+                                    <Select placeholder="Please select user" disabled={this.userId ? true : false}>
                                         {this.state.userList.map((item: any, i: number) => {
                                             return <Option key={i+'user'} value={item.userId}>{item.userName}</Option>
                                         })}
