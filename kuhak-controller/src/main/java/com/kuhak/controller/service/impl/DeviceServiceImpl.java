@@ -86,12 +86,13 @@ public class DeviceServiceImpl implements DeviceService {
 			DeviceDto devdR = new DeviceDto();
 			devdR.setDeviceId(devR.getDeviceId());
 			devdR.setDeviceExtId(devR.getDeviceExtId());
-			devdR.setDeviceName(devdR.getDeviceName());
+			devdR.setDeviceName(devR.getDeviceName());
 			devdR.setStatus(devR.getStatus().toString());
 			devdR.setDeviceType(devR.getDeviceType().toString());
 			devdR.setUserId(devR.getUser().getUserId());
 			devdR.setValidUpto(devR.getValidUpto());
-			devdR.setProtocolId(devdR.getProtocolId());
+			devdR.setActivated_on(devR.getActivated_on());
+			devdR.setProtocolId(devR.getProtocol().getProtocolId());
 			 return devdR;
 		}).collect(Collectors.toList());
 
