@@ -62,11 +62,12 @@ public class DeviceServiceImpl implements DeviceService {
 
 
 	@Override
-	public DeviceDto update(DeviceDto device) {
+	public Device update(Device device) {
 
 		/*Device updatedDevice = deviceRepo.saveAndFlush(deviceMapper.mapDeviceDtoToDevice(device));
 		return deviceMapper.mapDeviceToDeviceDto(updatedDevice);*/
-		Optional<Device> deviceO = deviceRepo.findById(device.getDeviceId());
+
+		/*Optional<Device> deviceO = deviceRepo.findById(device.getDeviceId());
 		if(!deviceO.isPresent()){
 			System.out.println(deviceO.isPresent());
 			throw new ResourceNotFoundException("Device not found with id:"
@@ -77,7 +78,16 @@ public class DeviceServiceImpl implements DeviceService {
 		Device deviceToUpdate = deviceMapper.mapDeviceDtoToDevice(device);
 		deviceToUpdate.setGateway(gatewayForDevice);
 		Device updatedDevice = deviceRepo.saveAndFlush(deviceToUpdate);
-		return deviceMapper.mapDeviceToDeviceDto(updatedDevice);
+		return deviceMapper.mapDeviceToDeviceDto(updatedDevice);*/
+		Optional<Device> deviceO = deviceRepo.findById(device.getDeviceId());
+		if(!deviceO.isPresent()){
+			System.out.println(deviceO.isPresent());
+			throw new ResourceNotFoundException("Device not found with id:"
+					+device.getDeviceId()+" ext id:"+device.getDeviceExtId());
+		}
+		Gateway gatewayForDevice = deviceO.get().getGateway();
+		device.setGateway(gatewayForDevice);
+		return deviceRepo.saveAndFlush(device);
 	}
 
 	@Override

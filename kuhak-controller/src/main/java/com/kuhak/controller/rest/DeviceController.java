@@ -38,36 +38,46 @@ public class DeviceController {
 	// get all user
 	@GetMapping
 	public List<DeviceDto> getAllDevice() {
-		return deviceService.getAllDevice().stream().map(device -> deviceMapper.mapDeviceToDeviceDto(device))
+		Boolean isCreae = false;
+		return deviceService.getAllDevice().stream().map(device -> deviceMapper.mapDeviceToDeviceDto(device, isCreae))
 				.collect(Collectors.toList());
 	}
 
 
 	@GetMapping("/{id}")
 	public DeviceDto getDeviceById(@PathVariable(value = "id") Long deviceId) {
+		Boolean isCreae = false;
 		Device device = deviceService.getDeviceById(deviceId);
-		return deviceMapper.mapDeviceToDeviceDto(device);
+		return deviceMapper.mapDeviceToDeviceDto(device, isCreae);
 	}
 
 	@GetMapping("/externalid/{extid}")
 	public DeviceDto getDeviceByExtId(@PathVariable(value = "extid") Long deviceExtId) {
+		Boolean isCreae = false;
 		Device device = deviceService.getDeviceByExtId(deviceExtId);
-		return deviceMapper.mapDeviceToDeviceDto(device);
+		return deviceMapper.mapDeviceToDeviceDto(device, isCreae);
 	}
 
 
 	@PostMapping
 	public DeviceDto createDevice(@RequestBody DeviceDto deviceDto) {
+		Boolean isCreate = true;
 		deviceDto.setStatus("NEW");
-		Device device = deviceService.createOrUpdateDevice(deviceMapper.mapDeviceDtoToDevice(deviceDto));
-		return deviceMapper.mapDeviceToDeviceDto(device);
+		Device device = deviceService.createOrUpdateDevice(deviceMapper.mapDeviceDtoToDevice(deviceDto, isCreate));
+		return deviceMapper.mapDeviceToDeviceDto(device, isCreate);
 	}
 
 	//Status Change
 	@PostMapping("/update")
 	public ResponseEntity<?> update(@Valid @RequestBody DeviceDto device) {
+		Boolean isCreae = false;
 		try {
-			return new ResponseEntity<DeviceDto>(deviceService.update(device), HttpStatus.OK);
+
+			/*return new ResponseEntity<DeviceDto> deviceService.update
+					(deviceMapper.mapDeviceDtoToDevice(device,isCreae)),isCreae), HttpStatus.OK);*/
+			Device deviceE = deviceMapper.mapDeviceDtoToDevice(device,isCreae);
+			deviceE = deviceService.update(deviceE);
+			return new ResponseEntity<DeviceDto>(deviceMapper.mapDeviceToDeviceDto(deviceE,isCreae), HttpStatus.OK);
 		} catch (Exception Ex) {
 			throw new ResourceNotFoundException("Error while changing the status of Device with ID ===>"
 					+device.getDeviceId());
@@ -76,11 +86,15 @@ public class DeviceController {
 
 	@PostMapping("/activate")
 	public ResponseEntity<?> activate(@Valid @RequestBody DeviceDto device) {
-		DeviceDto deviceToActivated = deviceMapper.mapDeviceToDeviceDto(deviceService.getDeviceById(device.getDeviceId()));
+		Boolean isCreae = false;
+		DeviceDto deviceToActivated = deviceMapper.mapDeviceToDeviceDto(deviceService.getDeviceById(device.getDeviceId()),isCreae);
 		deviceToActivated.setStatus("ACTIVE"); ;
 		deviceToActivated.setActivated_on(LocalDateTime.now());
 			try {
-				return new ResponseEntity<DeviceDto>(deviceService.update(deviceToActivated), HttpStatus.OK);
+				Device deviceE = deviceMapper.mapDeviceDtoToDevice(deviceToActivated,isCreae);
+				deviceE = deviceService.update(deviceE);
+				return new ResponseEntity<DeviceDto>(deviceMapper.mapDeviceToDeviceDto(deviceE,isCreae)
+						, HttpStatus.OK);
 			} catch (Exception Ex) {
 				Ex.printStackTrace();
 				throw new ResourceNotFoundException("Error while activating Device with ID ===>"
@@ -91,11 +105,14 @@ public class DeviceController {
 
 	@PostMapping("/dactivate")
 	public ResponseEntity<?> dactivate(@Valid @RequestBody DeviceDto device) {
-		DeviceDto deviceToDeActivated = deviceMapper.mapDeviceToDeviceDto(deviceService.getDeviceById(device.getDeviceId()));
+		Boolean isCreae = false;
+		DeviceDto deviceToDeActivated = deviceMapper.mapDeviceToDeviceDto(deviceService.getDeviceById(device.getDeviceId()), isCreae);
 		deviceToDeActivated.setStatus("DEACTIVE");
 		deviceToDeActivated.setValidUpto(LocalDateTime.now());
 			try {
-				return new ResponseEntity<DeviceDto>(deviceService.update(deviceToDeActivated), HttpStatus.OK);
+				Device deviceE = deviceMapper.mapDeviceDtoToDevice(deviceToDeActivated,isCreae);
+				deviceE = deviceService.update(deviceE);
+				return new ResponseEntity<DeviceDto>(deviceMapper.mapDeviceToDeviceDto(deviceE,isCreae), HttpStatus.OK);
 			} catch (Exception Ex) {
 				Ex.printStackTrace();
 				throw new ResourceNotFoundException("Error while deactivating Device with ID ===>"

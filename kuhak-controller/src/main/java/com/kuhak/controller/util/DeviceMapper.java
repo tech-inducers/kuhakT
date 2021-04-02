@@ -36,7 +36,7 @@ public class DeviceMapper {
 	@Autowired
 	GatewayRepository gatewayRepository;
 
-	public DeviceDto mapDeviceToDeviceDto(Device device) {
+	public DeviceDto mapDeviceToDeviceDto(Device device , Boolean isCreate) {
 		DeviceDto deviceDto = new DeviceDto();
 		deviceDto.setDeviceExtId(device.getDeviceExtId());
 		deviceDto.setDeviceId(device.getDeviceId());
@@ -51,7 +51,7 @@ public class DeviceMapper {
 		return deviceDto;
 	}
 
-	public Device mapDeviceDtoToDevice(DeviceDto deviceDto) {
+	public Device mapDeviceDtoToDevice(DeviceDto deviceDto, Boolean isCreate) {
 		Device device = new Device();
 		device.setDeviceExtId(deviceDto.getDeviceExtId());
 		device.setDeviceId(deviceDto.getDeviceId());
@@ -80,6 +80,7 @@ public class DeviceMapper {
 			throw new ResourceNotFoundException("Protocol details not found with protocol id supplied ===>"
 					+deviceDto.getProtocolId());
 		}
+		if(isCreate){
 		Optional<Gateway> gateway = gatewayRepository.findByProtocolProtocolId(deviceDto.getProtocolId())
 				.stream().filter(gw -> gw.getDeviceCount()< gw.getDeviceLimit())
 				.sorted(Comparator.comparing(Gateway::getGatewayId)).findFirst();
@@ -89,6 +90,8 @@ public class DeviceMapper {
 		}else{
 			throw new ResourceNotFoundException("No gateway found for the protocol id supplied ====>"
 			+deviceDto.getProtocolId());
+		}}else {
+			device.setGateway(null);
 		}
 
 
