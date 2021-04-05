@@ -10,6 +10,7 @@ import ProviderManagement from "./components/ProviderManagement";
 import ProtocolManagement from "./components/ProtocolManagement";
 import GatewayMangement from "./components/GatewayManagement";
 import DeviceMangement from "./components/DeviceManagement";
+import ViewDeviceOnMap from "./components/ViewDeviceOnMap";
 import PageAccessRoute from './utils/PageAccessRoute';
 import { logout } from './store/actions/aclManagementActions';
 const { SubMenu } = Menu;
@@ -85,6 +86,7 @@ class App extends React.Component<any, any>{
                                     <PageAccessRoute path="/protocol" component={ProtocolManagement} />
                                     <PageAccessRoute path="/gateway" component={GatewayMangement} />
                                     <PageAccessRoute path="/devices" component={DeviceMangement} />
+                                    <PageAccessRoute path="/map/devices" component={ViewDeviceOnMap} />
                                     <PageAccessRoute path="/user/:userid/devices" component={DeviceMangement} />
                                     <Route path='/not-found' component={NotFound} />
                                     {/* <Route render={(props) => {
