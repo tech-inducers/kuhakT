@@ -3,10 +3,12 @@ import { NavLink } from "react-router-dom";
 import { Spin, Row, Col, Breadcrumb } from 'antd';
 import { FormInstance } from 'antd/lib/form';
 import firebase from "../../config/firebaseConfig";
-import { compose, withProps, lifecycle } from "recompose";
+import { compose, withProps, lifecycle, withHandlers, withState } from "recompose";
 import { withScriptjs, withGoogleMap, GoogleMap } from "react-google-maps";
 import DeviceMarker from './DeviceMarker';
 
+
+const equals = (a: any, b: any) => JSON.stringify(a) === JSON.stringify(b);
 // Map With A Marker.
 const MapWithAMarker: React.ComponentClass<any, any> = compose(
     withProps({
@@ -15,21 +17,37 @@ const MapWithAMarker: React.ComponentClass<any, any> = compose(
         containerElement: <div style={{ height: `76vh` }} />,
         mapElement: <div style={{ height: `100%` }} />
     }),
+    withState('mapRef', 'setMapRef', null),
+    withHandlers(() => {  
+      return {
+        zoomToMarkers: ({mapRef} :any) => () => {
+            if(mapRef){
+                const bounds =  new google.maps.LatLngBounds();
+                mapRef.props.children.forEach((child: any) => {
+                    if (child.type === DeviceMarker) {
+                        bounds.extend( new google.maps.LatLng(child.props.Lat, child.props.Long));
+                    }
+                })
+                mapRef.fitBounds(bounds);
+            }
+        }
+      }
+    }),
     lifecycle({
+        componentDidUpdate(prevProps: any, prevState){
+            if(!equals(this.props.markers, prevProps.markers)){
+                this.props.zoomToMarkers();
+            }
+        },
         componentDidMount() {
-          
+            let _: any= this;
             this.setState({
 
-                zoomToMarkers: (map: any) => {
-                    console.log("Zoom to markers");
+                onMapMounted: (map: any) => {
                     if(map){
-                        const bounds =  new google.maps.LatLngBounds();
-                        map.props.children.forEach((child: any) => {
-                            if (child.type === DeviceMarker) {
-                                bounds.extend( new google.maps.LatLng(child.props.Lat, child.props.Long));
-                            }
-                        })
-                        map.fitBounds(bounds);
+                        _.props.setMapRef(map, () => {
+                            _.props.zoomToMarkers();
+                        });
                     }
                 }
             })
@@ -38,7 +56,7 @@ const MapWithAMarker: React.ComponentClass<any, any> = compose(
     withScriptjs,
     withGoogleMap
 )((props: any) =>
-    <GoogleMap ref={props.zoomToMarkers} >
+    <GoogleMap ref={props.onMapMounted} >
         {props.markers.map((props: any) => <DeviceMarker key={props.DeviceExtID} {...props} />)}
     </GoogleMap>
 )
