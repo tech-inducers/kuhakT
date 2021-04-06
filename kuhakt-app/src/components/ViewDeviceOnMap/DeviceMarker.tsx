@@ -23,7 +23,10 @@ class DeviceMarker extends React.Component<any, any> {
             <Marker key={DeviceExtID} 
                 position={{ lat: Lat, lng: Long }}
                 onClick={() => this.handleToggle()} 
-                // options={{ icon: 'https://image.ibb.co/evMHxF/shopping_zone_marker_1.png' }}
+                options={{ 
+                    // icon: 'https://image.ibb.co/evMHxF/shopping_zone_marker_1.png' ,
+                    animation: google.maps.Animation.DROP,
+                }}
             >
                 {this.state.open && DeviceExtID? <InfoWindow onCloseClick={() => this.handleToggle()}><>DeviceExtID - {DeviceExtID}</></InfoWindow> : <></>}
             </Marker>
