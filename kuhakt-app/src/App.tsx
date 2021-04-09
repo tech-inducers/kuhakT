@@ -80,7 +80,7 @@ class App extends React.Component<any, any>{
                         <Content className="inner-content">
                             <Switch>
                                 <React.Suspense fallback={<></>}>
-                                    <Route exact path="/login" component={Login} />
+                                    <Route exact path="/" component={Login} />
                                     <PageAccessRoute path="/users" component={UserManagement} />
                                     <PageAccessRoute path="/providers" component={ProviderManagement} />
                                     <PageAccessRoute path="/protocol" component={ProtocolManagement} />
