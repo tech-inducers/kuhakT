@@ -1,4 +1,4 @@
-export const SERVER_API_URL = process.env.REACT_APP_LOCAL_ENV === 'TRUE' ? process.env.REACT_APP_API_URL : window.location.origin+:9090;
+export const SERVER_API_URL = process.env.REACT_APP_LOCAL_ENV === 'TRUE' ? process.env.REACT_APP_API_URL : window.location.origin+':9090';
 
 export const messages = {
   DATA_ERROR_ALERT: 'Internal Error',
