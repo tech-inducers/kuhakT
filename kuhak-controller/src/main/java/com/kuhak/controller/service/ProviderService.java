@@ -13,7 +13,7 @@ public interface ProviderService {
 
 	Provider getProvider(Long providerId);
 
-	Provider getProviderByExtId(Long providerExtId);
+	Provider getProviderByExtId(String providerExtId);
 
 	void deleteProvider(Long providerId);
 

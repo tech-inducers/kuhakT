@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 
 public class DeviceDto {
 
-    Long deviceExtId;
+    String deviceExtId;
     Long deviceId;
     String deviceName;
     String status;
@@ -15,11 +15,11 @@ public class DeviceDto {
     String deviceType;
     Long protocolId;
 
-    public Long getDeviceExtId() {
+    public String  getDeviceExtId() {
         return deviceExtId;
     }
 
-    public void setDeviceExtId(Long deviceExtId) {
+    public void setDeviceExtId(String  deviceExtId) {
         this.deviceExtId = deviceExtId;
     }
 

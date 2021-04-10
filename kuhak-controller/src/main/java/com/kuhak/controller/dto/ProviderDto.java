@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 public class ProviderDto {
 
 
-    Long providerExtId;
+    String providerExtId;
     Long providerId;
     String providerName;
     String status;
@@ -16,11 +16,11 @@ public class ProviderDto {
 
 
 
-    public Long getProviderExtId() {
+    public String getProviderExtId() {
         return providerExtId;
     }
 
-    public void setProviderExtId(Long providerExtId) {
+    public void setProviderExtId(String providerExtId) {
         this.providerExtId = providerExtId;
     }
 

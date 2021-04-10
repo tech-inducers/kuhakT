@@ -13,7 +13,7 @@ public interface DeviceService {
 
 	Device getDeviceById(Long id);
 
-	Device getDeviceByExtId(Long extId);
+	Device getDeviceByExtId(String extId);
 
 	void deleteDevice(Long id);
 

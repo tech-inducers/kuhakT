@@ -24,9 +24,9 @@ public class Device implements Serializable {
     private Long deviceId;
 
     @Column(name = "device_ext_id", nullable = false,unique = true)
-    private Long deviceExtId;
+    private String deviceExtId;
 
-    @Column(name = "device_name", nullable = false)
+    @Column(name = "device_name")
     private String deviceName;
 
     @Enumerated(EnumType.STRING)
@@ -90,11 +90,11 @@ public class Device implements Serializable {
         this.deviceId = deviceId;
     }
 
-    public Long getDeviceExtId() {
+    public String getDeviceExtId() {
         return deviceExtId;
     }
 
-    public void setDeviceExtId(Long deviceExtId) {
+    public void setDeviceExtId(String deviceExtId) {
         this.deviceExtId = deviceExtId;
     }
 

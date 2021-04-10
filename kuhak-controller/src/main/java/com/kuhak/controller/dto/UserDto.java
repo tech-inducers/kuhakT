@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 public class UserDto {
 
-    Long userExtId;
+    String userExtId;
     Long userId;
     String userName;
     String status;
@@ -16,11 +16,11 @@ public class UserDto {
     Long providerId;
 
 
-    public Long getUserExtId() {
+    public String getUserExtId() {
         return userExtId;
     }
 
-    public void setUserExtId(Long userExtId) {
+    public void setUserExtId(String userExtId) {
         this.userExtId = userExtId;
     }
 

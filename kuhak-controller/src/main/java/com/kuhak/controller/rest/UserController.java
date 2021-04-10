@@ -40,7 +40,7 @@ public class UserController {
     }
 
     @GetMapping("/externalid/{extid}")
-    public UserDto getUserByExtId(@PathVariable(value = "extid") Long userExtId){
+    public UserDto getUserByExtId(@PathVariable(value = "extid") String userExtId){
         User user = userService.getUserByExtId(userExtId);
         return userMapper.mapUserToUserDto(user);
     }

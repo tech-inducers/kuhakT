@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserByExtId(Long userExtId) {
+    public User getUserByExtId(String userExtId) {
 
             return userRepo.findByUserExtId(userExtId).orElseThrow(()-> new ResourceNotFoundException(
                     "User not found with ext id"+ userExtId.toString()

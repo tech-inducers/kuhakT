@@ -48,7 +48,7 @@ public class DeviceServiceImpl implements DeviceService {
 	}
 
 	@Override
-	public Device getDeviceByExtId(Long extId) {
+	public Device getDeviceByExtId(String extId) {
 		return deviceRepo.findByDeviceExtId(extId).orElseThrow(()-> new ResourceNotFoundException(
 				"Device not found with id"+ extId.toString()
 		));

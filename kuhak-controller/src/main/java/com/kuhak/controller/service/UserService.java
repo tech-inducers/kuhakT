@@ -12,7 +12,7 @@ public interface UserService {
     public User createUser(User user);
     public List<User> getAllUser();
     public User getUserById(Long userId);
-    public User getUserByExtId(Long userExtId);
+    public User getUserByExtId(String userExtId);
     public void deleteUser(Long userId);
     public User updateUser(User user);
     public List<UserDto> getAllUserByProviderId(Long providerId);

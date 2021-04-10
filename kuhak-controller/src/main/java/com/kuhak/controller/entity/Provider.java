@@ -24,7 +24,7 @@ public class Provider implements Serializable {
     private Long providerId;
 
     @Column(name = "provider_ext_id", nullable = false,unique = true)
-    private Long providerExtId;
+    private String providerExtId;
 
     @Column(name = "provider_name", nullable = false)
     private String providerName;
@@ -78,11 +78,11 @@ public class Provider implements Serializable {
         this.providerId = providerId;
     }
 
-    public Long getProviderExtId() {
+    public String getProviderExtId() {
         return providerExtId;
     }
 
-    public void setProviderExtId(Long providerExtId) {
+    public void setProviderExtId(String providerExtId) {
         this.providerExtId = providerExtId;
     }
 

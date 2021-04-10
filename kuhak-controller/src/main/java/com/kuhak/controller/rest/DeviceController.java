@@ -52,7 +52,7 @@ public class DeviceController {
 	}
 
 	@GetMapping("/externalid/{extid}")
-	public DeviceDto getDeviceByExtId(@PathVariable(value = "extid") Long deviceExtId) {
+	public DeviceDto getDeviceByExtId(@PathVariable(value = "extid") String deviceExtId) {
 		Boolean isCreae = false;
 		Device device = deviceService.getDeviceByExtId(deviceExtId);
 		return deviceMapper.mapDeviceToDeviceDto(device, isCreae);

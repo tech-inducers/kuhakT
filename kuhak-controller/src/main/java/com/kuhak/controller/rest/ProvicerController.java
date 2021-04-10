@@ -43,7 +43,7 @@ public class ProvicerController {
 	}
 
 	@GetMapping("/externalid/{extid}")
-	public ProviderDto getProviderByExtId(@PathVariable(value = "extid") Long providerExtId) {
+	public ProviderDto getProviderByExtId(@PathVariable(value = "extid") String providerExtId) {
 		Provider provider = providerService.getProviderByExtId(providerExtId);
 		return providerMapper.mapProviderToProviderDto(provider);
 	}

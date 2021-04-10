@@ -41,7 +41,7 @@ public class ProviderServiceImpl implements ProviderService {
 	}
 
 	@Override
-	public Provider getProviderByExtId(Long providerExtId) {
+	public Provider getProviderByExtId(String providerExtId) {
 		return providerRepo.findByProviderExtId(providerExtId).orElseThrow(()-> new ResourceNotFoundException(
 				"provider not found with id"+ providerExtId.toString()
 		));

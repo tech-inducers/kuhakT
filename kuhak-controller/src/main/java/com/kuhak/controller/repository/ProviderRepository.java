@@ -9,7 +9,7 @@ import java.util.Optional;
 @Repository
 public interface ProviderRepository extends JpaRepository<Provider, Long> {
 
-    Optional<Provider> findByProviderExtId(Long providerExtId);
+    Optional<Provider> findByProviderExtId(String providerExtId);
 
 
 }
