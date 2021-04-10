@@ -1,5 +1,5 @@
 import * as React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import DeviceService from "../../services/DeviceManagementService";
 import ProtocolService from "../../services/ProtocolManagementService";
 import UserService from "../../services/UserManagementService";
@@ -29,6 +29,7 @@ class DeviceMangementContainer extends React.Component<any, any> {
             data: [],
             protocolList: [],
             userList:[],
+            allDeviceExtIds:[],
             columns: [{
                 title: 'Device Name',
                 dataIndex: 'deviceName',
@@ -65,7 +66,10 @@ class DeviceMangementContainer extends React.Component<any, any> {
                             Activate
                         </Button> : null }
                         <Button type="primary" onClick={() => this.openEditDrawer(record)}  icon={<EditOutlined />} size={'small'} />
-                        <Button type="text" icon={<CustomIconFont type="icon-map" style={{color: "#75c82b", fontSize: '20px'}}/>} size={'small'} />
+                        <Link to={{
+                            pathname: '/map/devices',
+                            state: { deviceExtIds: [record.deviceExtId],  userId: this.userId }
+                        }}><Button type="text" icon={<CustomIconFont type="icon-map" style={{color: "#75c82b", fontSize: '20px'}}/>} size={'small'} /></Link>
                     </Space>
                 ),
             }]
@@ -78,8 +82,7 @@ class DeviceMangementContainer extends React.Component<any, any> {
     componentDidMount() {
         this.getDevices();
         this.getUsers();
-        this.getProtocols();
-        console.log(this.userId)        
+        this.getProtocols();    
     }
     loader = (status: boolean) => {
         this.setState({
@@ -120,14 +123,21 @@ class DeviceMangementContainer extends React.Component<any, any> {
         this.loader(true);
         let allDevicesApi =  this.userId ? this.deviceService.fetchUserWiseDevices(this.userId) : this.deviceService.fetchDevices()
         allDevicesApi.then(({ data }: any) => {
+            let allDeviceExtIds: any = [];
+            let allDevice: any = [];
+
+
+            data.forEach( (item: any, i: number) =>  {
+                allDeviceExtIds.push(item.deviceExtId);
+                allDevice.push({
+                    ...item,
+                    'key' : 'devices'+i
+                });
+            }); 
             this.setState({
                 ...this.state,
-                data: data.map((item: any, i: number) => {
-                    return {
-                        ...item,
-                        'key' : 'devices'+i
-                    }
-                })
+                data: allDevice,
+                allDeviceExtIds
             });
             this.loader(false);
         }).catch((error: any) => {
@@ -245,6 +255,12 @@ class DeviceMangementContainer extends React.Component<any, any> {
                         <Button style={{ float: "right" }} type="primary" icon={<PlusOutlined />} size={'small'} onClick={this.showAddDrawer}>
                             Add Device
                         </Button>
+                        <Link to={{
+                            pathname: '/map/devices',
+                            state: { deviceExtIds: this.state.allDeviceExtIds,  userId: this.userId}
+                        }}><Button style={{ float: "right", marginRight: 10 }} icon={<CustomIconFont type="icon-map" style={{color: "#75c82b"}}/>} size={'small'} >
+                            View All Device
+                        </Button></Link>
                     </Col>
                 </Row>
                 <Table columns={columns} dataSource={data} />
