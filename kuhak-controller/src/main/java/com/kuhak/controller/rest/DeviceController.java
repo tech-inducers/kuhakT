@@ -7,7 +7,10 @@ import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
+import com.kuhak.controller.dto.AppDto;
 import com.kuhak.controller.exception.ResourceNotFoundException;
+import com.kuhak.controller.service.ProtocolService;
+import com.kuhak.controller.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +34,14 @@ public class DeviceController {
 
 	@Autowired
 	DeviceService deviceService;
+
+	@Autowired
+	UserService userService;
+
+
+
+	@Autowired
+	ProtocolService protocolService;
 
 	@Autowired
 	DeviceMapper deviceMapper;
@@ -58,7 +69,32 @@ public class DeviceController {
 		return deviceMapper.mapDeviceToDeviceDto(device, isCreae);
 	}
 
-
+	@PostMapping("/app")
+	public DeviceDto createApp(@RequestBody AppDto appDto){
+		Boolean isCreate = true;
+		Long userId;
+		try{
+			userId = userService.getUserByExtId(appDto.getUserExtId()).getUserId();
+		}catch(Exception ex){
+			throw new ResourceNotFoundException("Supplied userExtId is not valid");
+		}
+		DeviceDto deviceDto = new DeviceDto();
+		deviceDto.setDeviceExtId(appDto.getAppExtId());
+		deviceDto.setDeviceName(appDto.getAppExtId());
+		deviceDto.setStatus("ACTIVE");
+		deviceDto.setValidUpto(null);
+		deviceDto.setActivated_on(null);
+		deviceDto.setUserId(userId);
+		deviceDto.setDeviceType("MOVIABLE");
+		deviceDto.setProtocolId(protocolService.getProtocolByProtocolName("http").getProtocolId());
+		Device device;
+		try {
+			device = deviceService.createOrUpdateDevice(deviceMapper.mapDeviceDtoToDevice(deviceDto, isCreate));
+		}catch (Exception ex){
+			throw new ResourceNotFoundException("Error while creating app");
+		}
+		return  deviceMapper.mapDeviceToDeviceDto(device,isCreate);
+	}
 	@PostMapping
 	public DeviceDto createDevice(@RequestBody DeviceDto deviceDto) {
 		Boolean isCreate = true;

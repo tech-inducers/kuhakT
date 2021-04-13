@@ -14,6 +14,7 @@ public class DeviceDto {
     Long userId;
     String deviceType;
     Long protocolId;
+    
 
     public String  getDeviceExtId() {
         return deviceExtId;
