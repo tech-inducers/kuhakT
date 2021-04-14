@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 
 import com.kuhak.controller.dto.AppDto;
+import com.kuhak.controller.entity.Gateway;
 import com.kuhak.controller.exception.ResourceNotFoundException;
 import com.kuhak.controller.service.ProtocolService;
 import com.kuhak.controller.service.UserService;
@@ -70,7 +71,7 @@ public class DeviceController {
 	}
 
 	@PostMapping("/app")
-	public DeviceDto createApp(@RequestBody AppDto appDto){
+	public ResponseEntity<?> createApp(@RequestBody AppDto appDto){
 		Boolean isCreate = true;
 		Long userId;
 		try{
@@ -93,7 +94,10 @@ public class DeviceController {
 		}catch (Exception ex){
 			throw new ResourceNotFoundException("Error while creating app");
 		}
-		return  deviceMapper.mapDeviceToDeviceDto(device,isCreate);
+		Gateway gateway = device.getGateway();
+		String gatewayURL = gateway.getGatwwayPrefix()+gateway.getGatewayIp()+":"+gateway.getGatewayPort()+gateway.getGatewaySuffix();
+
+		return new ResponseEntity<String>(gatewayURL, HttpStatus.OK);
 	}
 	@PostMapping
 	public DeviceDto createDevice(@RequestBody DeviceDto deviceDto) {
