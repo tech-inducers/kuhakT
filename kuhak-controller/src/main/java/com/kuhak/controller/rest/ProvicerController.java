@@ -6,13 +6,13 @@ import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
+import com.kuhak.controller.dto.ProviderDtoId;
 import com.kuhak.controller.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.kuhak.controller.dto.DeviceDto;
 import com.kuhak.controller.dto.ProviderDto;
 import com.kuhak.controller.entity.Provider;
 import com.kuhak.controller.service.ProviderService;
@@ -69,29 +69,32 @@ public class ProvicerController {
 	}
 
 	@PostMapping("/activate")
-	public ResponseEntity<?> activate(@Valid @RequestBody ProviderDto provider) {
-		ProviderDto providerToActivated = providerMapper.mapProviderToProviderDto(providerService.getProvider(provider.getProviderId()));
+	public ResponseEntity<?> activate(@Valid @RequestBody ProviderDtoId inprovider) {
+		ProviderDto providerToActivated = providerMapper.mapProviderToProviderDto(providerService.getProvider
+				(inprovider.getProviderId()));
+
 		providerToActivated.setStatus("ACTIVE");
-		provider.setActivated_on(LocalDateTime.now());
+		providerToActivated.setActivated_on(LocalDateTime.now());
 			try {
 				return new ResponseEntity<ProviderDto>(providerService.update(providerToActivated), HttpStatus.OK);
 			} catch (Exception Ex) {
 				throw new ResourceNotFoundException("Error while activating provider with ID ===>"
-						+ provider.getProviderId());
+						+ providerToActivated.getProviderId());
 			}
 
 	}
 
 	@PostMapping("/deactivate")
-	public ResponseEntity<?> deactivate(@Valid @RequestBody ProviderDto provider) {
-		ProviderDto providerToDeActivated = providerMapper.mapProviderToProviderDto(providerService.getProvider(provider.getProviderId()));
+	public ResponseEntity<?> deactivate(@Valid @RequestBody ProviderDtoId inprovider) {
+		ProviderDto providerToDeActivated = providerMapper.mapProviderToProviderDto(providerService.getProvider
+				(inprovider.getProviderId()));
 		providerToDeActivated.setStatus("DEACTIVE");
-		provider.setValidUpto(LocalDateTime.now());
+		providerToDeActivated.setValidUpto(LocalDateTime.now());
 			try {
 				return new ResponseEntity<ProviderDto>(providerService.update(providerToDeActivated), HttpStatus.OK);
 			} catch (Exception Ex) {
 				throw new ResourceNotFoundException("Error while activating provider with ID ===>"
-						+ provider.getProviderId());
+						+ providerToDeActivated.getProviderId());
 			}
 
 	}

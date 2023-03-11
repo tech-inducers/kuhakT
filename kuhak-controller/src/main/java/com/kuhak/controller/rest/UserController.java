@@ -1,6 +1,7 @@
 package com.kuhak.controller.rest;
 
 import com.kuhak.controller.dto.UserDto;
+import com.kuhak.controller.dto.UserDtoId;
 import com.kuhak.controller.entity.User;
 import com.kuhak.controller.exception.ResourceNotFoundException;
 import com.kuhak.controller.service.UserService;
@@ -70,29 +71,29 @@ public class UserController {
     }
 
     @PostMapping("/activate")
-    public ResponseEntity<?> activate(@Valid @RequestBody UserDto userDto){
-        UserDto userToActivated = userMapper.mapUserToUserDto(userService.getUserById(userDto.getUserId()));
+    public ResponseEntity<?> activate(@Valid @RequestBody UserDtoId userDtoId){
+        UserDto userToActivated = userMapper.mapUserToUserDto(userService.getUserById(userDtoId.getUserId()));
         userToActivated.setStatus("ACTIVE");
             userToActivated.setActivated_on(LocalDateTime.now());
         try{
             return new ResponseEntity<UserDto>(userMapper.mapUserToUserDto(userService
                     .updateUser(userMapper.mapUserDtoToUser(userToActivated))), HttpStatus.OK);
         }catch (Exception ex){
-            throw new ResourceNotFoundException("User not found with id ===>"+userDto.getUserId());
+            throw new ResourceNotFoundException("User not found with id ===>"+userDtoId.getUserId());
 
 
     }}
 
     @PostMapping("/deactivate")
-    public ResponseEntity<?> deactivate(@Valid @RequestBody UserDto userDto){
-        UserDto userToDeActivated = userMapper.mapUserToUserDto(userService.getUserById(userDto.getUserId()));
+    public ResponseEntity<?> deactivate(@Valid @RequestBody UserDtoId userDtoId){
+        UserDto userToDeActivated = userMapper.mapUserToUserDto(userService.getUserById(userDtoId.getUserId()));
         userToDeActivated.setStatus("DEACTIVE");
         userToDeActivated.setValidUpto(LocalDateTime.now());
         try{
             return new ResponseEntity<UserDto>(userMapper.mapUserToUserDto(userService
                     .updateUser(userMapper.mapUserDtoToUser(userToDeActivated))), HttpStatus.OK);
         }catch (Exception ex){
-            throw new ResourceNotFoundException("User not found with id ===>"+userDto.getUserId());
+            throw new ResourceNotFoundException("User not found with id ===>"+userDtoId.getUserId());
         }
 
     }

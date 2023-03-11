@@ -31,7 +31,7 @@ import com.kuhak.controller.util.DeviceMapper;
 @RestController
 @RequestMapping("/api/device")
 @CrossOrigin(origins = "*")
-public class DeviceController {
+public class  DeviceController {
 
 	@Autowired
 	DeviceService deviceService;
