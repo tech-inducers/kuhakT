@@ -16,7 +16,7 @@ public class UserMapper {
 
     public UserDto mapUserToUserDto(User user){
         UserDto userDto = new UserDto();
-        userDto.setUserExtId(user.getUserExtId());
+        userDto.setUserId(user.getUserId());
         userDto.setUserId(user.getUserId());
         userDto.setUserName(user.getUserName());
         userDto.setStatus(user.getStatus().toString());
@@ -29,7 +29,7 @@ public class UserMapper {
 
     public User mapUserDtoToUser(UserDto userDto ){
         User user = new User();
-        user.setUserExtId(userDto.getUserExtId());
+        user.setUserId(userDto.getUserId());
         user.setUserId(userDto.getUserId());
         user.setUserName(userDto.getUserName());
         user.setStatus(UserStatus.valueOf(userDto.getStatus()));

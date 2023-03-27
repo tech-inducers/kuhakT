@@ -10,7 +10,7 @@ public class ProviderMapper {
 
     public ProviderDto mapProviderToProviderDto(Provider provider){
         ProviderDto providerDto = new ProviderDto();
-        providerDto.setProviderExtId(provider.getProviderExtId());
+        providerDto.setProviderId(provider.getProviderId());
         providerDto.setProviderId(provider.getProviderId());
         providerDto.setStatus(provider.getStatus().toString());
         providerDto.setProviderName(provider.getProviderName());
@@ -22,7 +22,7 @@ public class ProviderMapper {
 
     public Provider mapProviderDtoToProvider(ProviderDto providerDto){
         Provider provider = new Provider();
-        provider.setProviderExtId(providerDto.getProviderExtId());
+        provider.setProviderId(providerDto.getProviderId());
         provider.setProviderId(providerDto.getProviderId());
         provider.setProviderName(providerDto.getProviderName());
         provider.setStatus(ProviderStatus.valueOf(providerDto.getStatus()));

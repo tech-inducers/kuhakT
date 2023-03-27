@@ -4,35 +4,25 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-//import com.sun.istack.NotNull;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
-@Table(name = "k_user")
-public class User implements Serializable {
+@Table(name = "k_devicegroup")
+public class DeviceGroup {
 
-    private static final long serialVersionUID = 1L;
+
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id", nullable = false)
-    private Long userId;
+    @Column(name = "devicegroup_id", nullable = false)
+    private Long deviceGroupId;
 
-//    @Column(name = "user_ext_id", nullable = false, unique = true)
-//    private String userExtId;
-
-    @Column(name = "user_name", nullable = false)
-    private String userName;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status", nullable = false)
-    private UserStatus status;
+    @Column(name = "devicegroup_name", nullable = false)
+    private String deviceGroupName;
 
     @JsonFormat(pattern = "yyyy-MM-ddTHH:mm:ss")
     @Column(name = "valid_upto")
@@ -54,56 +44,26 @@ public class User implements Serializable {
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime updated_At;
 
-    /*@OneToMany(mappedBy = "user", cascade = { CascadeType.ALL })
-    private Set<Device> devices = new HashSet<>();*/
-
     @ManyToOne(optional = false)
     @NotNull
-    @JsonIgnoreProperties("user")
-    private Provider provider;
+    @JsonIgnoreProperties("deviceGroup")
+    private User user;
 
-    @PrePersist
-    protected void onCreate() {
-        this.created_At = LocalDateTime.now();
+
+    public Long getDeviceGroupId() {
+        return deviceGroupId;
     }
 
-    @PreUpdate
-    protected void onUpdate() {
-        this.updated_At = LocalDateTime.now();
+    public void setDeviceGroupId(Long deviceGroupId) {
+        this.deviceGroupId = deviceGroupId;
     }
 
-
-
-    public Long getUserId() {
-        return userId;
+    public String getDeviceGroupName() {
+        return deviceGroupName;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-//    public String getUserExtId() {
-//        return userExtId;
-//    }
-//
-//    public void setUserExtId(String userExtId) {
-//        this.userExtId = userExtId;
-//    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public UserStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(UserStatus status) {
-        this.status = status;
+    public void setDeviceGroupName(String deviceGroupName) {
+        this.deviceGroupName = deviceGroupName;
     }
 
     public LocalDateTime getValidUpto() {
@@ -138,11 +98,14 @@ public class User implements Serializable {
         this.updated_At = updated_At;
     }
 
-    public Provider getProvider() {
-        return provider;
+    public User getUser() {
+        return user;
     }
 
-    public void setProvider(Provider provider) {
-        this.provider = provider;
+    public void setUser(User user) {
+        this.user = user;
     }
+
+
+
 }

@@ -13,10 +13,10 @@ public interface DeviceService {
 
 	Device getDeviceById(Long id);
 
-	Device getDeviceByExtId(String extId);
+//	Device getDeviceByExtId(String extId);
 
 	void deleteDevice(Long id);
 
 	Device update(Device device);
-	List<DeviceDto> getAllDeviceByUserId(Long userId);
+	List<DeviceDto> getAllDeviceByDeviceGroupId(Long userId);
 }

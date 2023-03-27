@@ -21,7 +21,7 @@ import com.kuhak.controller.util.ProviderMapper;
 @RestController
 @RequestMapping("/api/provider")
 @CrossOrigin(origins = "*")
-public class ProvicerController {
+public class ProviderController {
 
 	@Autowired
 	private ProviderService providerService;
@@ -42,11 +42,11 @@ public class ProvicerController {
 		return providerMapper.mapProviderToProviderDto(provider);
 	}
 
-	@GetMapping("/externalid/{extid}")
-	public ProviderDto getProviderByExtId(@PathVariable(value = "extid") String providerExtId) {
-		Provider provider = providerService.getProviderByExtId(providerExtId);
-		return providerMapper.mapProviderToProviderDto(provider);
-	}
+//	@GetMapping("/externalid/{extid}")
+//	public ProviderDto getProviderByExtId(@PathVariable(value = "extid") String providerExtId) {
+//		Provider provider = providerService.getProviderById(providerExtId);
+//		return providerMapper.mapProviderToProviderDto(provider);
+//	}
 
 	// Create Provider
 	@PostMapping

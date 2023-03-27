@@ -2,8 +2,10 @@ package com.kuhak.controller.util;
 
 import com.kuhak.controller.entity.*;
 import com.kuhak.controller.exception.ResourceNotFoundException;
+import com.kuhak.controller.repository.DeviceGroupRepository;
 import com.kuhak.controller.repository.GatewayRepository;
 import com.kuhak.controller.repository.ProtocolRepository;
+import com.kuhak.controller.service.DeviceGroupService;
 import com.kuhak.controller.service.GatewayService;
 import com.kuhak.controller.service.ProtocolService;
 import net.bytebuddy.implementation.bind.MethodDelegationBinder;
@@ -22,21 +24,12 @@ import java.util.stream.Collectors;
 public class DeviceMapper {
 
 	@Autowired
-	UserService userService;
+	DeviceGroupService deviceGroupService;
 
-	/*@Autowired
-	ProtocolService protocolService;*//*
 
-	@Autowired
-	GatewayService gatewayService;*/
 
-	@Autowired
-	ProtocolRepository protocolRepository;
 
-	@Autowired
-	GatewayRepository gatewayRepository;
-
-	public DeviceDto mapDeviceToDeviceDto(Device device , Boolean isCreate) {
+	public DeviceDto mapDeviceToDeviceDto(Device device ) {
 		DeviceDto deviceDto = new DeviceDto();
 		deviceDto.setDeviceExtId(device.getDeviceExtId());
 		deviceDto.setDeviceId(device.getDeviceId());
@@ -44,14 +37,16 @@ public class DeviceMapper {
 		deviceDto.setStatus(device.getStatus().toString());
 		deviceDto.setActivated_on(device.getActivated_on());
 		deviceDto.setValidUpto(device.getValidUpto());
-		deviceDto.setUserId(device.getUser().getUserId());
+		//deviceDto.setUserId(device.getUser().getUserId());
 		deviceDto.setDeviceType(device.getDeviceType().toString());
-		deviceDto.setProtocolId(device.getProtocol().getProtocolId());
+		deviceDto.setDeviceGroupId(device.getDeviceGroup().getDeviceGroupId());
+		//deviceDto.setProtocolId(device.getProtocol().getProtocolId());
+
 
 		return deviceDto;
 	}
 
-	public Device mapDeviceDtoToDevice(DeviceDto deviceDto, Boolean isCreate) {
+	public Device mapDeviceDtoToDevice(DeviceDto deviceDto) {
 		Device device = new Device();
 		device.setDeviceExtId(deviceDto.getDeviceExtId());
 		device.setDeviceId(deviceDto.getDeviceId());
@@ -59,40 +54,10 @@ public class DeviceMapper {
 		device.setStatus(DeviceStatus.valueOf(deviceDto.getStatus()));
 		device.setActivated_on(deviceDto.getActivated_on());
 		device.setValidUpto(deviceDto.getValidUpto());
-		device.setUser(userService.getUserById(deviceDto.getUserId()));
+		//device.setUser(userService.getUserById(deviceDto.getUserId()));
 		device.setDeviceType(DeviceType.valueOf(deviceDto.getDeviceType()));
-		/*if(protocolRepository.findById(deviceDto.getProtocolId()).isPresent()){
-			System.out.println(protocolRepository.findById(deviceDto.getProtocolId()).get().getProtocolId());
-			device.setProtocol(protocolRepository.findById(deviceDto.getProtocolId()).get());
-		}
-		List<Gateway> gwL =gatewayRepository.findByProtocolProtocolId(deviceDto.getProtocolId()).stream()
-				.filter(gw -> gw.getDeviceCount()< gw.getDeviceLimit()).collect(Collectors.toList());
-		if(gwL.size() != 0){
-			if(gwL.stream().sorted().findFirst().isPresent()){
-				System.out.println(gwL.stream().sorted().findFirst().get().getGatewayId());
-				device.setGateway(gwL.stream().sorted().findFirst().get());
-			}
-		}*/
-		Optional<Protocol> pro = protocolRepository.findById(deviceDto.getProtocolId());
-		if(pro.isPresent()){
-			device.setProtocol(pro.get());
-		}else{
-			throw new ResourceNotFoundException("Protocol details not found with protocol id supplied ===>"
-					+deviceDto.getProtocolId());
-		}
-		if(isCreate){
-		Optional<Gateway> gateway = gatewayRepository.findByProtocolProtocolId(deviceDto.getProtocolId())
-				.stream().filter(gw -> gw.getDeviceCount()< gw.getDeviceLimit())
-				.sorted(Comparator.comparing(Gateway::getGatewayId)).findFirst();
+		device.setDeviceGroup(deviceGroupService.getDeviceGroupById(deviceDto.getDeviceGroupId()));
 
-		if(gateway.isPresent()){
-			device.setGateway(gateway.get());
-		}else{
-			throw new ResourceNotFoundException("No gateway found for the protocol id supplied ====>"
-			+deviceDto.getProtocolId());
-		}}else {
-			device.setGateway(null);
-		}
 
 
 

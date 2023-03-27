@@ -57,20 +57,22 @@ public class Device implements Serializable {
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime updated_At;
 
+
+
     @ManyToOne(optional = false)
     @NotNull
-    @JsonIgnoreProperties("device")
-    private User user;
+    @JsonIgnoreProperties("deviceGroup")
+    private DeviceGroup deviceGroup;
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name="protocol_id", nullable = false)
-    @NotNull
-    private Protocol protocol;
-
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name="gateway_id", nullable = false)
-    @NotNull
-    private Gateway gateway;
+//    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+//    @JoinColumn(name="protocol_id", nullable = false)
+//    @NotNull
+//    private Protocol protocol;
+//
+//    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+//    @JoinColumn(name="gateway_id", nullable = false)
+//    @NotNull
+//    private Gateway gateway;
 
     @PrePersist
     protected void onCreate() {
@@ -146,13 +148,7 @@ public class Device implements Serializable {
         this.updated_At = updated_At;
     }
 
-    public User getUser() {
-        return user;
-    }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
 
     public DeviceType getDeviceType() {
         return deviceType;
@@ -162,19 +158,27 @@ public class Device implements Serializable {
         this.deviceType = deviceType;
     }
 
-    public Protocol getProtocol() {
-        return protocol;
+//    public Protocol getProtocol() {
+//        return protocol;
+//    }
+//
+//    public void setProtocol(Protocol protocol) {
+//        this.protocol = protocol;
+//    }
+//
+//    public Gateway getGateway() {
+//        return gateway;
+//    }
+//
+//    public void setGateway(Gateway gateway) {
+//        this.gateway = gateway;
+//    }
+
+    public DeviceGroup getDeviceGroup() {
+        return deviceGroup;
     }
 
-    public void setProtocol(Protocol protocol) {
-        this.protocol = protocol;
-    }
-
-    public Gateway getGateway() {
-        return gateway;
-    }
-
-    public void setGateway(Gateway gateway) {
-        this.gateway = gateway;
+    public void setDeviceGroup(DeviceGroup deviceGroup) {
+        this.deviceGroup = deviceGroup;
     }
 }

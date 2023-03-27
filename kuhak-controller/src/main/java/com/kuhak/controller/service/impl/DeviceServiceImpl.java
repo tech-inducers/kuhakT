@@ -14,7 +14,7 @@ import com.kuhak.controller.entity.Device;
 import com.kuhak.controller.exception.ResourceNotFoundException;
 import com.kuhak.controller.repository.DeviceRepository;
 import com.kuhak.controller.service.DeviceService;
-import com.kuhak.controller.util.DeviceMapper;
+//import com.kuhak.controller.util.DeviceMapper;
 
 @Service
 public class DeviceServiceImpl implements DeviceService {
@@ -25,13 +25,13 @@ public class DeviceServiceImpl implements DeviceService {
 	@Autowired
 	GatewayRepository gatewayRepository;
 
-	@Autowired
-	DeviceMapper deviceMapper;
+//	@Autowired
+//	DeviceMapper deviceMapper;
 
 	@Override
 	public Device createOrUpdateDevice(Device device) {
 		Device d = deviceRepo.save(device);
-		incrementGatewayDeviceCount(device.getGateway().getGatewayId());
+		//incrementGatewayDeviceCount(device.getGateway().getGatewayId());
 		return d;
 	}
 
@@ -47,12 +47,12 @@ public class DeviceServiceImpl implements DeviceService {
 
 	}
 
-	@Override
-	public Device getDeviceByExtId(String extId) {
-		return deviceRepo.findByDeviceExtId(extId).orElseThrow(()-> new ResourceNotFoundException(
-				"Device not found with id"+ extId.toString()
-		));
-	}
+//	@Override
+////	public Device getDeviceByExtId(String extId) {
+////		return deviceRepo.findByDeviceExtId(extId).orElseThrow(()-> new ResourceNotFoundException(
+////				"Device not found with id"+ extId.toString()
+////		));
+////	}
 
 	@Override
 	public void deleteDevice(Long deviceId) {
@@ -85,25 +85,26 @@ public class DeviceServiceImpl implements DeviceService {
 			throw new ResourceNotFoundException("Device not found with id:"
 					+device.getDeviceId()+" ext id:"+device.getDeviceExtId());
 		}
-		Gateway gatewayForDevice = deviceO.get().getGateway();
-		device.setGateway(gatewayForDevice);
+//		Gateway gatewayForDevice = deviceO.get().getGateway();
+//		device.setGateway(gatewayForDevice);
 		return deviceRepo.saveAndFlush(device);
 	}
 
 	@Override
-	public List<DeviceDto> getAllDeviceByUserId(Long userId) {
-		return deviceRepo.findByUserUserId(userId).stream().map(devR ->{
-			DeviceDto devdR = new DeviceDto();
-			devdR.setDeviceId(devR.getDeviceId());
-			devdR.setDeviceExtId(devR.getDeviceExtId());
-			devdR.setDeviceName(devR.getDeviceName());
-			devdR.setStatus(devR.getStatus().toString());
-			devdR.setDeviceType(devR.getDeviceType().toString());
-			devdR.setUserId(devR.getUser().getUserId());
-			devdR.setValidUpto(devR.getValidUpto());
-			devdR.setActivated_on(devR.getActivated_on());
-			devdR.setProtocolId(devR.getProtocol().getProtocolId());
-			 return devdR;
+	public List<DeviceDto> getAllDeviceByDeviceGroupId(Long deviceGroupId) {
+		return deviceRepo.findByDeviceGroupDeviceGroupId(deviceGroupId).stream().map(devR ->{
+			DeviceDto deviceDto = new DeviceDto();
+			deviceDto.setDeviceId(devR.getDeviceId());
+			deviceDto.setDeviceExtId(devR.getDeviceExtId());
+			deviceDto.setDeviceName(devR.getDeviceName());
+			deviceDto.setStatus(devR.getStatus().toString());
+			deviceDto.setDeviceType(devR.getDeviceType().toString());
+			//devdR.setUserId(devR.getUser().getUserId());
+			deviceDto.setDeviceGroupId(devR.getDeviceGroup().getDeviceGroupId());
+			deviceDto.setValidUpto(devR.getValidUpto());
+			deviceDto.setActivated_on(devR.getActivated_on());
+			//deviceDto.setProtocolId(devR.getProtocol().getProtocolId());
+			 return deviceDto;
 		}).collect(Collectors.toList());
 
 	}

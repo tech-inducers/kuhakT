@@ -39,14 +39,7 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    @Override
-    public User getUserByExtId(String userExtId) {
 
-            return userRepo.findByUserExtId(userExtId).orElseThrow(()-> new ResourceNotFoundException(
-                    "User not found with ext id"+ userExtId.toString()
-            ));
-
-    }
 
     @Override
     public void deleteUser(Long userId) {
@@ -57,7 +50,7 @@ public class UserServiceImpl implements UserService {
     public User updateUser(User user) {
         if(!userRepo.existsById(user.getUserId())){
             throw new ResourceNotFoundException("User not found with id:"+
-            user.getUserId()+" ext id:"+user.getUserExtId());
+            user.getUserId()+" ext id:"+user.getUserId());
         }
         return userRepo.save(user);
     }
@@ -70,7 +63,7 @@ public class UserServiceImpl implements UserService {
             usrdR.setStatus(usrR.getStatus().toString());
             usrdR.setUserId(usrR.getUserId());
             usrdR.setActivated_on(usrR.getActivated_on());
-            usrdR.setUserExtId(usrR.getUserExtId());
+            usrdR.setUserId(usrR.getUserId());
             usrdR.setUserName(usrR.getUserName());
             usrdR.setValidUpto(usrR.getValidUpto());
 

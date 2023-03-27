@@ -30,7 +30,8 @@ public class UserController {
     // get all user
     @GetMapping
     public List<UserDto> getAllUsers(){
-        return userService.getAllUser().stream().map(user -> userMapper.mapUserToUserDto(user)).collect(Collectors.toList());
+        return userService.getAllUser().stream().map(user ->
+                userMapper.mapUserToUserDto(user)).collect(Collectors.toList());
     }
 
     //Get User by Id
@@ -40,11 +41,11 @@ public class UserController {
         return userMapper.mapUserToUserDto(user);
     }
 
-    @GetMapping("/externalid/{extid}")
-    public UserDto getUserByExtId(@PathVariable(value = "extid") String userExtId){
-        User user = userService.getUserByExtId(userExtId);
-        return userMapper.mapUserToUserDto(user);
-    }
+//    @GetMapping("/externalid/{extid}")
+//    public UserDto getUserByExtId(@PathVariable(value = "extid") String userExtId){
+//        User user = userService.getUserById(userExtId);
+//        return userMapper.mapUserToUserDto(user);
+//    }
 
     //Create User
     @PostMapping
