@@ -14,7 +14,9 @@ public interface DeviceGroupService {
 
     public DeviceGroup getDeviceGroupById(Long deviceGroupId);
 
-    public void deleteDeviceGroup(Long deviceGroupId);
+
+
+    public void deleteDeviceGroup (Long deviceGroupId);
 
     public DeviceGroup updateDeviceGroup(DeviceGroup deviceGroup);
 }

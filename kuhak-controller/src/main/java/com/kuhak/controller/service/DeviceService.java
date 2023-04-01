@@ -7,11 +7,13 @@ import com.kuhak.controller.entity.Device;
 import com.kuhak.controller.entity.Gateway;
 
 public interface DeviceService {
-	Device createOrUpdateDevice(Device device);
+	//Device createOrUpdateDevice(Device device);
 
 	List<Device> getAllDevice();
 
 	Device getDeviceById(Long id);
+
+	Device createDevice(DeviceDto deviceDto);
 
 //	Device getDeviceByExtId(String extId);
 

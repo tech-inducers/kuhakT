@@ -15,13 +15,7 @@ import com.kuhak.controller.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.kuhak.controller.dto.DeviceDto;
 import com.kuhak.controller.entity.Device;
@@ -35,10 +29,6 @@ public class  DeviceController {
 
 	@Autowired
 	DeviceService deviceService;
-
-//	@Autowired
-//	UserService userService;
-
 
 
 	@Autowired
@@ -102,11 +92,18 @@ public class  DeviceController {
 //		return new ResponseEntity<String>(gatewayURL, HttpStatus.OK);
 //	}
 	@PostMapping
-	public DeviceDto createDevice(@RequestBody DeviceDto deviceDto) {
+	public ResponseEntity<?> createDevice(@RequestBody DeviceDto deviceDto) {
 //		Boolean isCreate = true;
 //		deviceDto.setStatus("NEW");
-		Device device = deviceService.createOrUpdateDevice(deviceMapper.mapDeviceDtoToDevice(deviceDto));
-		return deviceMapper.mapDeviceToDeviceDto(device);
+		try {
+			Device device = deviceService.createDevice(deviceDto);
+
+			return new ResponseEntity<String>("Device created succesfuly with id: "
+					+deviceDto.getDeviceId(),HttpStatus.OK);
+		}catch (Exception ex){
+			ex.printStackTrace();
+			throw new RuntimeException("Error while creating device with id: "+deviceDto.getDeviceId());
+		}
 	}
 
 	//Status Change
@@ -129,7 +126,7 @@ public class  DeviceController {
 	@PostMapping("/activate")
 	public ResponseEntity<?> activate(@Valid @RequestBody DeviceDto device) {
 		Boolean isCreae = false;
-		DeviceDto deviceToActivated = deviceMapper.mapDeviceToDeviceDto(deviceService.getDeviceById(device.getDeviceId()));
+		DeviceDto deviceToActivated = deviceMapper.mapDeviceToDeviceDto(deviceService.getDeviceById(device.getDeviceId()) );
 		deviceToActivated.setStatus("ACTIVE"); ;
 		deviceToActivated.setActivated_on(LocalDateTime.now());
 			try {
@@ -166,5 +163,10 @@ public class  DeviceController {
 	@GetMapping("/getalldevice/user/{userid}")
 	public List<DeviceDto> getAllDeviceByUserId(@PathVariable (value = "userid") Long userId){
 		return deviceService.getAllDeviceByDeviceGroupId(userId);
+	}
+
+	@DeleteMapping("/device/{id}")
+	public void delete(@PathVariable("id") Long id){
+		deviceService.deleteDevice(id);
 	}
 }

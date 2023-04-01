@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -34,8 +35,16 @@ public class DeviceGroupServiceImpl implements DeviceGroupService {
         ));
     }
 
+
+
     @Override
     public void deleteDeviceGroup(Long deviceGroupId) {
+        Optional<DeviceGroup> deviceGroupOp = deviceGroupRepository.findByDeviceGroupId(deviceGroupId);
+        if(deviceGroupOp.isPresent()){
+            deviceGroupRepository.delete(deviceGroupOp.get());
+        } else {
+            throw new ResourceNotFoundException("Device Group not found with id :"+deviceGroupId);
+        }
 
     }
 

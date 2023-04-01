@@ -26,7 +26,7 @@ public class Provider implements Serializable {
 //    @Column(name = "provider_ext_id", nullable = false,unique = true)
 //    private String providerExtId;
 
-    @Column(name = "provider_name", nullable = false)
+    @Column(name = "provider_name", nullable = false, unique=true)
     private String providerName;
 
     @Enumerated(EnumType.STRING)

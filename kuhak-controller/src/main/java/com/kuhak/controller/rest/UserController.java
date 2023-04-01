@@ -98,4 +98,10 @@ public class UserController {
         }
 
     }
+
+    @DeleteMapping("/user/{id}")
+    public void delete(@PathVariable("id") Long id){
+        userService.deleteUser(id);
+    }
+
 }

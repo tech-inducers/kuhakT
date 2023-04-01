@@ -56,7 +56,13 @@ public class DeviceGroupController {
                     (deviceGroupMapper.mapDeviceGroupDtoToDeviceGroup(deviceGroupDtoIn))),
                     HttpStatus.OK);
         }catch(Exception ex){
+            ex.printStackTrace();
             throw new ResourceNotFoundException("DeviceGroup not found with deviceGroupId:"+deviceGroupDtoIn.getDeviceGroupId());
         }
+    }
+
+    @DeleteMapping("/devicegroup/{id}")
+    public void delete(@PathVariable("id") Long id){
+        deviceGroupService.deleteDeviceGroup(id);
     }
 }

@@ -26,7 +26,7 @@ public class Device implements Serializable {
     @Column(name = "device_ext_id", nullable = false,unique = true)
     private String deviceExtId;
 
-    @Column(name = "device_name")
+    @Column(name = "device_name", nullable = false,unique = true)
     private String deviceName;
 
     @Enumerated(EnumType.STRING)

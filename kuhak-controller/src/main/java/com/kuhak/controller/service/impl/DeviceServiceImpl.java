@@ -4,8 +4,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.kuhak.controller.entity.DeviceGroup;
 import com.kuhak.controller.entity.Gateway;
+import com.kuhak.controller.repository.DeviceGroupRepository;
 import com.kuhak.controller.repository.GatewayRepository;
+import com.kuhak.controller.util.DeviceMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,17 +26,23 @@ public class DeviceServiceImpl implements DeviceService {
 	DeviceRepository deviceRepo;
 
 	@Autowired
+	DeviceGroupRepository deviceGroupRepository;
+
+	@Autowired
 	GatewayRepository gatewayRepository;
+
+	@Autowired
+	DeviceMapper deviceMapper;
 
 //	@Autowired
 //	DeviceMapper deviceMapper;
 
-	@Override
-	public Device createOrUpdateDevice(Device device) {
-		Device d = deviceRepo.save(device);
-		//incrementGatewayDeviceCount(device.getGateway().getGatewayId());
-		return d;
-	}
+//	@Override
+//	public Device createOrUpdateDevice(Device device) {
+//		Device d = deviceRepo.save(device);
+//		//incrementGatewayDeviceCount(device.getGateway().getGatewayId());
+//		return d;
+//	}
 
 	@Override
 	public List<Device> getAllDevice() {
@@ -47,6 +56,26 @@ public class DeviceServiceImpl implements DeviceService {
 
 	}
 
+	@Override
+	public Device createDevice(DeviceDto deviceDto) {
+		if(deviceDto.getDeviceGroupId() != null){
+			deviceRepo.save(deviceMapper.mapDeviceDtoToDevice(deviceDto));
+		} else if (deviceDto.getDeviceGroupId() == null && deviceDto.getDeviceGroupName() != null) {
+			Optional<DeviceGroup> deviceGroupOpt = deviceGroupRepository.findByDeviceGroupName(deviceDto.getDeviceGroupName());
+			if(deviceGroupOpt.isPresent()){
+				deviceDto.setDeviceGroupId(deviceGroupOpt.get().getDeviceGroupId());
+				deviceRepo.save(deviceMapper.mapDeviceDtoToDevice(deviceDto));
+			}else{
+				throw new ResourceNotFoundException("Device Group supplied not found "+deviceDto.getDeviceGroupName());
+			}
+		} else if (deviceDto.getDeviceGroupId() == null && deviceDto.getDeviceGroupName() == null) {
+			throw new RuntimeException("Device Group id or name must be provided");
+		}
+
+
+		return null;
+	}
+
 //	@Override
 ////	public Device getDeviceByExtId(String extId) {
 ////		return deviceRepo.findByDeviceExtId(extId).orElseThrow(()-> new ResourceNotFoundException(
@@ -56,7 +85,12 @@ public class DeviceServiceImpl implements DeviceService {
 
 	@Override
 	public void deleteDevice(Long deviceId) {
-
+		Optional<Device> deviceOp = deviceRepo.findById(deviceId);
+		if(deviceOp.isPresent()) {
+			deviceRepo.delete(deviceOp.get());
+		} else {
+			throw new ResourceNotFoundException("Device not found with id :"+deviceId);
+		}
 	}
 
 
@@ -114,4 +148,5 @@ public class DeviceServiceImpl implements DeviceService {
 		gwO.setDeviceCount(gwO.getDeviceCount()+1);
 		gatewayRepository.save(gwO);
 	}
+
 }

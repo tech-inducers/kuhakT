@@ -27,7 +27,7 @@ public class User implements Serializable {
 //    @Column(name = "user_ext_id", nullable = false, unique = true)
 //    private String userExtId;
 
-    @Column(name = "user_name", nullable = false)
+    @Column(name = "user_name", nullable = false, unique=true)
     private String userName;
 
     @Enumerated(EnumType.STRING)

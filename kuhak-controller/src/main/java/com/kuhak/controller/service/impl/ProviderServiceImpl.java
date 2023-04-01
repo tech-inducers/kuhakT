@@ -49,7 +49,12 @@ public class ProviderServiceImpl implements ProviderService {
 
 	@Override
 	public void deleteProvider(Long providerId) {
-
+		Optional<Provider> providerOp= providerRepo.findById(providerId);
+		if(providerOp.isPresent()){
+			providerRepo.delete(providerOp.get());
+		}else{
+			throw new ResourceNotFoundException("Provider not found with id: "+providerId);
+		}
 	}
 
 	@Override

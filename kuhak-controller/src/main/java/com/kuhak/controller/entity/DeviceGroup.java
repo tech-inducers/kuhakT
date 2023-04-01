@@ -21,7 +21,7 @@ public class DeviceGroup {
     @Column(name = "devicegroup_id", nullable = false)
     private Long deviceGroupId;
 
-    @Column(name = "devicegroup_name", nullable = false)
+    @Column(name = "devicegroup_name", nullable = false, unique=true)
     private String deviceGroupName;
 
     @JsonFormat(pattern = "yyyy-MM-ddTHH:mm:ss")

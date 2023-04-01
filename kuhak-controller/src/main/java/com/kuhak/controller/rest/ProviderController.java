@@ -98,4 +98,8 @@ public class ProviderController {
 			}
 
 	}
+	@DeleteMapping("/provider/{id}")
+	public void delete(@PathVariable("id") Long id){
+		providerService.deleteProvider(id);
+	}
 }

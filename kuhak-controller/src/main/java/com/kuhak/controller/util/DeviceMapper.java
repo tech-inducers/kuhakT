@@ -40,6 +40,7 @@ public class DeviceMapper {
 		//deviceDto.setUserId(device.getUser().getUserId());
 		deviceDto.setDeviceType(device.getDeviceType().toString());
 		deviceDto.setDeviceGroupId(device.getDeviceGroup().getDeviceGroupId());
+		deviceDto.setDeviceGroupName(device.getDeviceGroup().getDeviceGroupName());
 		//deviceDto.setProtocolId(device.getProtocol().getProtocolId());
 
 

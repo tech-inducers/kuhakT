@@ -21,6 +21,17 @@ public class DeviceDto {
     }
 
     Long deviceGroupId;
+
+    String deviceGroupName;
+
+    public String getDeviceGroupName() {
+        return deviceGroupName;
+    }
+
+    public void setDeviceGroupName(String deviceGroupName) {
+        this.deviceGroupName = deviceGroupName;
+    }
+
     String deviceType;
     
 
